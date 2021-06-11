@@ -10,15 +10,15 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Like_Song {
+public class CommentSong {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String content;
+
     @ManyToOne
     private User user;
-
-    private boolean isLike;
 
     @ManyToOne
     private Song song;

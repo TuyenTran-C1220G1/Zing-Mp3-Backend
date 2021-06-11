@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment_Artist {
+public class CommentPlayList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,5 +21,5 @@ public class Comment_Artist {
     private User user;
 
     @ManyToOne
-    private Artist artist;
+    private Playlist playlist;
 }

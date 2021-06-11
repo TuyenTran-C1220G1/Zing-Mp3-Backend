@@ -30,6 +30,8 @@ public class Song {
     private Date createAt;
 
     private Date editAt;
+
+    private String album;
     //xoa
     private Boolean status = true;
 

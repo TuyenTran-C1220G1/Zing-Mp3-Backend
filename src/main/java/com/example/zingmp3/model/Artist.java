@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
 
 @Entity
 @Data
@@ -25,6 +25,4 @@ public class Artist {
 
     private Date dob;
 
-    @ManyToMany
-    private List<Album> album;
 }
