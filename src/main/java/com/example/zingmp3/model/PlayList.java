@@ -19,7 +19,10 @@ public class PlayList {
 
     private String namePlaylist;
 
+    @Lob
     private String description;
+
+    private String type;
 
     private String image;
 
