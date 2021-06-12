@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -40,7 +39,8 @@ public class User {
 
     private Long facebookId;
 
-    private Long playListRoot;
+    @ManyToOne
+    private PlayList playListRoot;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;

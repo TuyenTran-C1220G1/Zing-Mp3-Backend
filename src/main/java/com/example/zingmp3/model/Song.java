@@ -40,5 +40,5 @@ public class Song {
     private Long views = 0L;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Playlist> playlists = new ArrayList<>();
+    private List<PlayList> playLists = new ArrayList<>();
 }

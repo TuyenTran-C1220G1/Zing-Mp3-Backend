@@ -21,5 +21,5 @@ public class LikePlayList {
     private boolean isLike;
 
     @ManyToOne
-    private Playlist playlist;
+    private PlayList playlist;
 }
