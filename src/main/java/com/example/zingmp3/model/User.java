@@ -40,7 +40,7 @@ public class User {
     private Long facebookId;
 
     @ManyToOne
-    private PlayList playListRoot;
+    private Playlist playlistRoot;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;

@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayList {
+public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 

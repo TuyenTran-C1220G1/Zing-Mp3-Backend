@@ -21,5 +21,5 @@ public class CommentPlayList {
     private User user;
 
     @ManyToOne
-    private PlayList playlist;
+    private Playlist playlist;
 }
