@@ -10,16 +10,16 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment_PlayList {
+public class LikeSong {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String content;
-
     @ManyToOne
     private User user;
 
+    private boolean isLike;
+
     @ManyToOne
-    private Playlist playlist;
+    private Song song;
 }
