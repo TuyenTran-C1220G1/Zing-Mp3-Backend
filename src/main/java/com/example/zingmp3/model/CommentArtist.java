@@ -6,20 +6,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Like_Artist {
+public class CommentArtist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String content;
+
     @ManyToOne
     private User user;
-
-    private boolean isLike;
 
     @ManyToOne
     private Artist artist;

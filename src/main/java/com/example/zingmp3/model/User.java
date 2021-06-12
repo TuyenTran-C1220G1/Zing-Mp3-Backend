@@ -38,9 +38,9 @@ public class User {
 
     private String email;
 
-    private Long facebook_id;
+    private Long facebookId;
 
-    private Long playList_id_root;
+    private Long playListRoot;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;

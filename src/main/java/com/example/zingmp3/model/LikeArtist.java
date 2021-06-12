@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Like_PlayList {
+public class LikeArtist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,5 +22,5 @@ public class Like_PlayList {
     private boolean isLike;
 
     @ManyToOne
-    private Playlist playlist;
+    private Artist artist;
 }
