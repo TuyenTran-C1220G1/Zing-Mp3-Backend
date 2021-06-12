@@ -57,12 +57,20 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody User user) {
+        Iterable<User> users = userService.findAll();
+        for (User currentUser : users) {
+            if (currentUser.getEmail().equals(user.getEmail()) ||currentUser.getUsername().equals(user.getUsername())) {
+                return new ResponseEntity<>("duplicate email or username",HttpStatus.BAD_REQUEST);
+            }
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
         Optional<Role> role = roleService.findById(1L);
         roles.add(role.get());
         user.setRoles(roles);
-        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
+        userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+
     }
 }
