@@ -1,4 +1,4 @@
-package com.example.zingmp3.repository.playlist;
+package com.example.zingmp3.repository.playlistRepo;
 
 import com.example.zingmp3.model.Playlist;
 import org.springframework.data.jpa.repository.JpaRepository;
