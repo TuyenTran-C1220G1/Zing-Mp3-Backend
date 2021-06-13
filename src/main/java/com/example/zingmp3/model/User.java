@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -28,13 +29,15 @@ public class User {
     private String password;
 
     @NotBlank
-    @Size(min = 10, max=10)
+    @Column(unique = true)
+    @Size(min = 10, max=20)
     private String phone;
 
     private String avatar ;
 
     private String address;
 
+    @Column(unique = true)
     private String email;
 
     private Long facebookId;

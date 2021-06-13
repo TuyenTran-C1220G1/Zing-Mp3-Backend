@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface ISongRepository extends JpaRepository<Song, Long> {
-    Page<Song> findSongByStatus(Boolean status,Pageable pageable);
+    Page<Song> findAllSongByStatus(Boolean status,Pageable pageable);
 
 }

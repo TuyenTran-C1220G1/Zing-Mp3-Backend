@@ -1,8 +1,8 @@
-package com.example.zingmp3.controller.playlist;
+package com.example.zingmp3.controller;
 
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.User;
-import com.example.zingmp3.service.playlistService.PlaylistServiceImpl;
+import com.example.zingmp3.service.playlist.IPlaylistService;
 import com.example.zingmp3.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,10 @@ public class PlaylistController {
 
     @Autowired
     UserService userService;
+
+
     @Autowired
-    PlaylistServiceImpl playlistService;
+    IPlaylistService playlistService;
 
     @GetMapping
     public ResponseEntity<?> getAll(@RequestParam int page, @RequestParam int size){
