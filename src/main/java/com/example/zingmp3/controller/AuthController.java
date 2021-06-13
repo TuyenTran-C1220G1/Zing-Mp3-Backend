@@ -72,6 +72,7 @@ public class AuthController {
             }
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         Set<Role> roles = new HashSet<>();
         Optional<Role> role = roleService.findById(1L);
 

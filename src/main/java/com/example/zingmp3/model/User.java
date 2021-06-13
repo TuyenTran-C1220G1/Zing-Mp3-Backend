@@ -30,7 +30,7 @@ public class User {
 
     @NotBlank
     @Column(unique = true)
-    @Size(min = 10, max=10)
+    @Size(min = 10, max=20)
     private String phone;
 
     private String avatar ;
