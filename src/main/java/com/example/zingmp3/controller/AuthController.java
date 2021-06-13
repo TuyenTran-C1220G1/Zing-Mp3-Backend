@@ -75,11 +75,11 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
         Optional<Role> role = roleService.findById(1L);
 
-        Playlist playlist = new Playlist();
-        playlist.setNamePlaylist("Play_List_Root");
-        playlistService.save(playlist);
+        Playlist newPlaylist =  new Playlist();
+        newPlaylist.setNamePlaylist("Playlist_Root");
+        Playlist playlist =  playlistService.save(newPlaylist);
+        user.setPlaylistRootId(playlist.getId());
         roles.add(role.get());
-        user.setPlaylistRoot(playlist);
         user.setRoles(roles);
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
