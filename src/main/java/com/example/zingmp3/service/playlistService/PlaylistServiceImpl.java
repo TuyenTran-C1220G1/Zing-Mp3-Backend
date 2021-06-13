@@ -32,4 +32,8 @@ public class PlaylistServiceImpl{
     public void delete(Long id) {
         playlistRepository.deleteById(id);
     }
+
+    public List<Playlist> findAll() {
+        return playlistRepository.findAll();
+    }
 }
