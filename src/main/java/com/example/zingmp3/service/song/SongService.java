@@ -4,10 +4,9 @@ import com.example.zingmp3.model.Song;
 import com.example.zingmp3.repository.ISongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -18,17 +17,25 @@ public class SongService implements ISongService {
 
 
     @Override
-    public Iterable<Song> findAll() {
-        return iSongRepository.findAll();
+    public Page<Song> findAllByStatus(Boolean status, Pageable pageable) {
+        return iSongRepository.findAllSongByStatus(status,pageable);
     }
 
+
     @Override
-    public Song save(Song product) {
-        return iSongRepository.save(product);
+    public Song save(Song song) {
+        return iSongRepository.save(song);
     }
 
     @Override
     public void remove(Long id) {
         iSongRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Song> findById(Long id) {
+        return iSongRepository.findById(id);
+    }
+
+
 }
