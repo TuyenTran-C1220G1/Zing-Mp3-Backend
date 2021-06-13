@@ -2,6 +2,7 @@ package com.example.zingmp3.service.playlistService;
 
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.service.IGeneralService;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;

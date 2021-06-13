@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PlaylistServiceImpl{
+public class PlaylistServiceImpl implements IPlaylistService{
     @Autowired
     private IPlaylistRepository playlistRepository;
 
@@ -18,7 +18,6 @@ public class PlaylistServiceImpl{
     public List<Playlist> findAll(@RequestParam int page, @RequestParam int size) {
         return playlistRepository.findAll();
     }
-
 
     public Optional<Playlist> findById(Long id) {
         return Optional.empty();
