@@ -3,10 +3,8 @@ package com.example.zingmp3.controller;
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
 import com.example.zingmp3.model.User;
-import com.example.zingmp3.repository.ISongRepository;
 import com.example.zingmp3.service.playlist.IPlaylistService;
 import com.example.zingmp3.service.song.ISongService;
-import com.example.zingmp3.service.user.IUserService;
 import com.example.zingmp3.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -54,7 +52,7 @@ public class SongController {
     @GetMapping("/delete/{id}")
     public ResponseEntity<?> deleteSong(@PathVariable Long id) {
         Optional<Song> songOptional = songService.findById(id);
-       if (songOptional!= null){
+       if (songOptional.isPresent()){
            songOptional.get().setStatus(false);
            songService.save(songOptional.get());
            return new ResponseEntity<>(HttpStatus.OK);
