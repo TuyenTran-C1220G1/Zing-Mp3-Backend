@@ -1,9 +1,11 @@
 package com.example.zingmp3.controller;
 
 import com.example.zingmp3.dto.JwtResponse;
+import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Role;
 import com.example.zingmp3.model.User;
 import com.example.zingmp3.service.JwtService;
+import com.example.zingmp3.service.playlist.IPlaylistService;
 import com.example.zingmp3.service.role.IRoleService;
 import com.example.zingmp3.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,9 @@ public class AuthController {
     @Autowired
     private IRoleService roleService;
 
+    @Autowired
+    private IPlaylistService playlistService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
@@ -58,12 +63,27 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody User user) {
+        Iterable<User> users = userService.findAll();
+        for (User currentUser : users) {
+            if(currentUser.getUsername().equals(user.getUsername())){
+                return new ResponseEntity<>("dbusername",HttpStatus.BAD_REQUEST);
+            }else if(currentUser.getPhone().equals(user.getPhone())){
+                return new ResponseEntity<>("dbphone",HttpStatus.BAD_REQUEST);
+            }
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         Set<Role> roles = new HashSet<>();
         Optional<Role> role = roleService.findById(1L);
+
+        Playlist newPlaylist =  new Playlist();
+        newPlaylist.setNamePlaylist("Playlist_Root");
+        Playlist playlist =  playlistService.save(newPlaylist);
+        user.setPlaylistRootId(playlist.getId());
         roles.add(role.get());
         user.setRoles(roles);
-        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
+        userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 }

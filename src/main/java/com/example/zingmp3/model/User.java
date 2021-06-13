@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -16,21 +19,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(min = 6, max=20)
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @NotBlank
+    @Column(nullable = false)
     private String password;
 
+    @NotBlank
+    @Column(unique = true)
+    @Size(min = 10, max=20)
     private String phone;
 
-    private String avatar;
+    private String avatar ;
 
     private String address;
 
+    @Column(unique = true)
     private String email;
 
     private Long facebookId;
 
-    private Long playListRoot;
+    private Long playlistRootId;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;

@@ -20,11 +20,11 @@ public class Song {
     private Long id;
 
     private String nameSong;
-
+    @Lob
     private String description;
-
+    @Lob
     private String imageUrl;
-
+    @Lob
     private String songUrl;
 
     private Date createAt;
