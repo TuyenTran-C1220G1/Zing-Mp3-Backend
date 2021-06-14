@@ -1,6 +1,9 @@
 package com.example.zingmp3.service.playlist;
 
 import com.example.zingmp3.model.Playlist;
+import com.example.zingmp3.model.Song;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -16,4 +19,9 @@ public interface IPlaylistService {
 
     List<Playlist> findAll();
 
+    Page<Playlist> findAllByStatus(Boolean status, Pageable pageable);
+
+    List<Playlist> findAllByCreatedTimeOrderByCreatedTime();
+
+    Playlist addSongToPlaylist(Long idSong, Long idPlaylist);
 }
