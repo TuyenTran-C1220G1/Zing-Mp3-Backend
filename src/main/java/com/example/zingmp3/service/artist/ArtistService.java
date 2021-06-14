@@ -32,4 +32,9 @@ public class ArtistService implements IArtistService {
     public void delete(Long id) {
         artistRepository.deleteById(id);
     }
+
+    @Override
+    public List<Artist> sortArtistByLike() {
+        return artistRepository.findAllOrderByLikesDesc();
+    }
 }

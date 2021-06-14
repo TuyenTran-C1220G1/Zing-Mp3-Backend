@@ -45,4 +45,10 @@ public class ArtistController {
         User currentUser= userService.getCurrentUser();
         return new ResponseEntity<>(artistService.save(artist),HttpStatus.OK);
     }
+
+    @GetMapping("/top")
+    public ResponseEntity<?> getTopArtist(){
+        List<Artist> artists = artistService.sortArtistByLike();
+        return new ResponseEntity<>(artists, HttpStatus.OK);
+    }
 }
