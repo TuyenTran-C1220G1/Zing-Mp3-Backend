@@ -63,4 +63,14 @@ public class PlaylistServiceImpl implements IPlaylistService{
         playlistRepository.save(playlist);
         return playlist;
     }
+
+    @Override
+    public List<Playlist> findAllByViewsOrderByViews() {
+        return playlistRepository.findAllByViewsOrderByViews();
+    }
+
+    @Override
+    public List<Playlist> findAllByUserUsername(String username) {
+        return playlistRepository.findAllByUserUsername(username);
+    }
 }

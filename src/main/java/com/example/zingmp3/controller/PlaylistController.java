@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -23,16 +24,16 @@ public class PlaylistController {
     @Autowired
     IPlaylistService playlistService;
 
-    @GetMapping
-    public ResponseEntity<?> getAllPlayList(@RequestParam int page, @RequestParam int size){
-        List<Playlist> playlists = playlistService.findAll(page,size);
+    @GetMapping("/list")
+    public ResponseEntity<?> getAllPlayList(){
+        List<Playlist> playlists = playlistService.findAll();
         if (playlists.size() == 0) {
             return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     public ResponseEntity<Playlist> createPlaylist(@RequestBody Playlist playlist){
         User currentUser= userService.getCurrentUser();
         playlist.setUser(currentUser);
@@ -49,4 +50,25 @@ public class PlaylistController {
         return new ResponseEntity<>(playlistService.addSongToPlaylist(idSong, idPlaylist), HttpStatus.OK);
     }
 
+    @GetMapping("/topview")
+    public ResponseEntity<List<Playlist>> getAllTopView(){
+        return new ResponseEntity<List<Playlist>>(playlistService.findAllByViewsOrderByViews(),HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<Playlist>> findAllByUserUsername(@PathVariable String username) {
+        List<Playlist> playlists = playlistService.findAllByUserUsername(username);
+        return new ResponseEntity<>(playlists, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{username}/{id}")
+    public ResponseEntity<?> getPlayListById(@PathVariable Long id) {
+        Optional<Playlist> playList = playlistService.findById(id);
+        if (playList == null) {
+            System.out.println("Playlist with id : " + id + "not found");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(playList, HttpStatus.OK);
+        }
+    }
 }

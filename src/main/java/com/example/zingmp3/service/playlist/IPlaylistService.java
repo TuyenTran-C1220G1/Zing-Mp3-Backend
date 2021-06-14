@@ -24,4 +24,7 @@ public interface IPlaylistService {
     List<Playlist> findAllByCreatedTimeOrderByCreatedTime();
 
     Playlist addSongToPlaylist(Long idSong, Long idPlaylist);
+
+    List<Playlist> findAllByViewsOrderByViews();
+    List<Playlist> findAllByUserUsername(String username);
 }

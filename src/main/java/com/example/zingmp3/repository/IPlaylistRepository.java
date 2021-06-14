@@ -14,6 +14,13 @@ import java.util.List;
 public interface IPlaylistRepository extends JpaRepository<Playlist,Long> {
     Page<Playlist> findAllSongByStatus(Boolean status, Pageable pageable);
 
-    @Query(value = "select * from playlist order by create_at desc limit 10", nativeQuery = true)
+    @Query(value = "select * from playlist order by create_at desc limit 1", nativeQuery = true)
     List<Playlist> findAllByCreatedTimeOrderByCreatedTime();
+
+    @Query(value = "select * from playlist order by views desc limit 1", nativeQuery = true)
+    List<Playlist> findAllByViewsOrderByViews();
+
+    List<Playlist> findAllByUserUsername(String username);
+
+
 }
