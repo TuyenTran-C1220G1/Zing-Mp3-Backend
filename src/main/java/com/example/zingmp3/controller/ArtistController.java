@@ -1,7 +1,6 @@
 package com.example.zingmp3.controller;
 
 import com.example.zingmp3.model.Artist;
-import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.User;
 import com.example.zingmp3.service.artist.IArtistService;
 import com.example.zingmp3.service.user.UserService;

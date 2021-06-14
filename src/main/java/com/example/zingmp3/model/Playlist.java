@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -31,7 +33,11 @@ public class Playlist {
 
     private Boolean status;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Song> songs = new ArrayList<>();
+
     @ManyToOne
     private User user;
+
 
 }

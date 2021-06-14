@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
+
 
 
 @Entity
@@ -32,13 +32,18 @@ public class Song {
     private Date editAt;
 
     private String album;
-    //xoa
+    //delete
     private Boolean status = true;
 
     private Long likes = 0L;
 
     private Long views = 0L;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Playlist> playlists = new ArrayList<>();
+    private  String author;
+
+    @ManyToOne
+    private Artist artists;
+
+    @ManyToOne
+    private Genre genre ;
 }

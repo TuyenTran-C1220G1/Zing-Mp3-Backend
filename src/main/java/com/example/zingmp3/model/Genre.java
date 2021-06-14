@@ -18,6 +18,5 @@ public class Genre {
 
     private String name;
 
-    @ManyToOne
-    private Song song;
+
 }
