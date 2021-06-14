@@ -1,14 +1,13 @@
 package com.example.zingmp3.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
+
 
 
 @Entity
@@ -33,7 +32,7 @@ public class Song {
     private Date editAt;
 
     private String album;
-    //xoa
+    //delete
     private Boolean status = true;
 
     private Long likes = 0L;
@@ -47,6 +46,4 @@ public class Song {
 
     @ManyToOne
     private Genre genre ;
-
-
 }

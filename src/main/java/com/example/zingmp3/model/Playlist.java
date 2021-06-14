@@ -38,4 +38,5 @@ public class Playlist {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Song> songs = new ArrayList<>();
+
 }

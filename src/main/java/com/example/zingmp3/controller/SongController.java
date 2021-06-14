@@ -1,5 +1,4 @@
 package com.example.zingmp3.controller;
-
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
 import com.example.zingmp3.model.User;
@@ -28,6 +27,7 @@ public class SongController {
 
     @Autowired
     IPlaylistService playlistService;
+
 
     @GetMapping
     public ResponseEntity<Page<Song>> getAllSong(Pageable pageable) {
@@ -67,5 +67,4 @@ public class SongController {
             return new ResponseEntity<>(song, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
 }
