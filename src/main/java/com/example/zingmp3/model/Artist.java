@@ -28,6 +28,10 @@ public class Artist {
 
     private Date dob;
 
+    private Long likes;
+
+    private String avata;
+
     @OneToMany
     private List<Song> songs;
 

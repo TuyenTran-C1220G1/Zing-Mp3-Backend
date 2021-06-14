@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -35,6 +36,17 @@ public class SongService implements ISongService {
     @Override
     public Optional<Song> findById(Long id) {
         return iSongRepository.findById(id);
+    }
+
+    @Override
+    public List<Song> sortByLike(Boolean status) {
+
+        return iSongRepository.findSongByStatusOrderByLikesDesc(status);
+    }
+
+    @Override
+    public List<Song> sortByView(Boolean status) {
+        return iSongRepository.findSongByStatusOrderByViewsDesc(status);
     }
 
 
