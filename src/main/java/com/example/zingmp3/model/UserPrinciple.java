@@ -19,12 +19,15 @@ public class UserPrinciple implements UserDetails {
 
     private String password;
 
+    private String avatar;
+
     private Collection<? extends GrantedAuthority> roles;
 
-    public UserPrinciple(Long id, String username, String password, Collection<? extends GrantedAuthority> roles) {
+    public UserPrinciple(Long id, String username, String password, String avatar,Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.avatar = avatar;
         this.roles = roles;
     }
 // buid 1 Userprinciple từ user
@@ -34,7 +37,7 @@ public class UserPrinciple implements UserDetails {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return new UserPrinciple(user.getId(), user.getUsername(),
-                user.getPassword(), authorities);
+                user.getPassword(), user.getAvatar(),authorities);
     }
 
     @Override
