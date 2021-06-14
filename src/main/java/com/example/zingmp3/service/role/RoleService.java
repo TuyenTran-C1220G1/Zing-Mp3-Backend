@@ -1,5 +1,6 @@
 package com.example.zingmp3.service.role;
 
+import com.example.zingmp3.model.Artist;
 import com.example.zingmp3.model.Role;
 import com.example.zingmp3.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package com.example.zingmp3.service.user;
 
+import com.example.zingmp3.model.Artist;
 import com.example.zingmp3.model.User;
 import com.example.zingmp3.model.UserPrinciple;
 import com.example.zingmp3.repository.IUserRepository;
@@ -24,8 +25,9 @@ public class UserService implements IUserService {
 
     @Override
     public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+        return Optional.empty();
     }
+
 
     @Override
     public User save(User user) {

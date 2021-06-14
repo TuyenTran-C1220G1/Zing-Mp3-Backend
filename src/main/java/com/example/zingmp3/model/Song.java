@@ -1,5 +1,6 @@
 package com.example.zingmp3.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,13 @@ public class Song {
 
     private Long views = 0L;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Playlist> playlists = new ArrayList<>();
+    private  String author;
+
+    @ManyToOne
+    private Artist artists;
+
+    @ManyToOne
+    private Genre genre ;
+
+
 }

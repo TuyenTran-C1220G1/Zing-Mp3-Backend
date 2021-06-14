@@ -1,11 +1,14 @@
 package com.example.zingmp3.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -25,4 +28,10 @@ public class Artist {
 
     private Date dob;
 
+    @OneToMany
+    private List<Song> songs;
+
+    public Artist(String nameArtist) {
+        this.nameArtist = nameArtist;
+    }
 }
