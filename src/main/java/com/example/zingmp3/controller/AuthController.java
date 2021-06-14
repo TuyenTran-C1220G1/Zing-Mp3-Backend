@@ -4,6 +4,7 @@ import com.example.zingmp3.dto.JwtResponse;
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Role;
 import com.example.zingmp3.model.User;
+import com.example.zingmp3.model.UserPrinciple;
 import com.example.zingmp3.service.JwtService;
 import com.example.zingmp3.service.playlist.IPlaylistService;
 import com.example.zingmp3.service.role.IRoleService;
@@ -57,9 +58,10 @@ public class AuthController {
 
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserPrinciple userPrinciple  = (UserPrinciple) userDetails;
         User currentUser = userService.findByUsername(user.getUsername());
 
-        return ResponseEntity.ok(new JwtResponse(currentUser.getId(), userDetails.getUsername(), jwt, userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(userPrinciple.getId(), userPrinciple.getUsername(),jwt,userPrinciple.getAvatar(), userDetails.getAuthorities()));
     }
 
     @PostMapping("/register")

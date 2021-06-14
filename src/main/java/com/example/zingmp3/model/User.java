@@ -33,6 +33,7 @@ public class User {
     @Size(min = 10, max=20)
     private String phone;
 
+    @Lob
     private String avatar ;
 
     private String address;

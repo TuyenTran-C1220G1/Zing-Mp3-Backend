@@ -33,10 +33,11 @@ public class Playlist {
 
     private Boolean status;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Song> songs = new ArrayList<>();
+
     @ManyToOne
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Song> songs = new ArrayList<>();
 
 }
