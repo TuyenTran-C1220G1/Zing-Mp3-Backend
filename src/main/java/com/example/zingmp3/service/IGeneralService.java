@@ -1,6 +1,7 @@
 package com.example.zingmp3.service;
 
-import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.zingmp3.model.Artist;
 
 import java.util.List;
 import java.util.Optional;

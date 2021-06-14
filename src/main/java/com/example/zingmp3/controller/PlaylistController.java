@@ -32,7 +32,7 @@ public class PlaylistController {
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
-    @PostMapping("create")
+    @PostMapping("")
     public ResponseEntity<Playlist> createPlaylist(@RequestBody Playlist playlist){
         User currentUser= userService.getCurrentUser();
         playlist.setUser(currentUser);
