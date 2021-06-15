@@ -1,31 +1,27 @@
 package com.example.zingmp3.controller;
 
-import com.example.zingmp3.model.Genre;
-import com.example.zingmp3.repository.IGenreRepository;
+import com.example.zingmp3.model.Song;
 import com.example.zingmp3.service.genre.IGenreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/genres")
 public class GenreController {
 
-
     @Autowired
     IGenreService genreService;
 
-    @GetMapping("{id}")
-    ResponseEntity<?> getGenreById(@PathVariable Long id){
-        return new ResponseEntity<>(genreService.findById(id), HttpStatus.OK);
-    }
-
-    @GetMapping("list")
-    ResponseEntity<?> getAll(){
-        return new ResponseEntity<>(genreService.findAll(),HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<?> getAllSong() {
+        return new ResponseEntity<>(genreService.findAll(), HttpStatus.OK);
     }
 }
