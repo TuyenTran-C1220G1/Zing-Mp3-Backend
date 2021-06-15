@@ -42,7 +42,7 @@ public class Song {
     private  String author;
 
     @ManyToOne
-    private Artist artists;
+    private Artist artist;
 
     @ManyToOne
     private Genre genre ;
