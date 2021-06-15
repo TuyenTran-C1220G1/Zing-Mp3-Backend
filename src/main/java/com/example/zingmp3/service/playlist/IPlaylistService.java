@@ -26,5 +26,8 @@ public interface IPlaylistService {
     Playlist addSongToPlaylist(Long idSong, Long idPlaylist);
 
     List<Playlist> findAllByViewsOrderByViews();
+
     List<Playlist> findAllByUserUsername(String username);
+
+
 }

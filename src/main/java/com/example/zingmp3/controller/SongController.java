@@ -35,6 +35,18 @@ public class SongController {
         return new ResponseEntity<Page<Song>>(songService.findAllByStatus(status, pageable), HttpStatus.OK);
     }
 
+    @GetMapping("/top")
+    public ResponseEntity<?> getTopSong() {
+        boolean status = true;
+        return new ResponseEntity<>(songService.sortByLike(status), HttpStatus.OK);
+    }
+
+    @GetMapping("/views")
+    public ResponseEntity<?> getViewsSong() {
+        boolean status = true;
+        return new ResponseEntity<>(songService.sortByView(status), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> createSong(@RequestBody Song song) {
         User currentUser = userService.getCurrentUser();
@@ -47,7 +59,7 @@ public class SongController {
         return new ResponseEntity<>(mes, HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> deleteSong(@PathVariable Long id) {
         Optional<Song> songOptional = songService.findById(id);
         if (songOptional.isPresent()) {

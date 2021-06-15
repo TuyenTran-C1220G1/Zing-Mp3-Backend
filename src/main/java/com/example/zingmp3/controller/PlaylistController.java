@@ -6,9 +6,11 @@ import com.example.zingmp3.service.playlist.IPlaylistService;
 import com.example.zingmp3.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,9 +42,9 @@ public class PlaylistController {
         return new ResponseEntity<>(playlistService.save(playlist),HttpStatus.CREATED);
     }
 
-    @GetMapping("/ratings")
+    @GetMapping(value = "/news",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Playlist>> getAllRatingsPlaylist(){
-        return new ResponseEntity<List<Playlist>>(playlistService.findAllByCreatedTimeOrderByCreatedTime(),HttpStatus.OK);
+        return new ResponseEntity<>(playlistService.findAllByCreatedTimeOrderByCreatedTime(),HttpStatus.OK);
     }
 
     @GetMapping("/user/{idPlaylist}/songs/{idSong}")
@@ -50,9 +52,9 @@ public class PlaylistController {
         return new ResponseEntity<>(playlistService.addSongToPlaylist(idSong, idPlaylist), HttpStatus.OK);
     }
 
-    @GetMapping("/topview")
+    @GetMapping(value = "/topview", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Playlist>> getAllTopView(){
-        return new ResponseEntity<List<Playlist>>(playlistService.findAllByViewsOrderByViews(),HttpStatus.OK);
+        return new ResponseEntity<>(playlistService.findAllByViewsOrderByViews(),HttpStatus.OK);
     }
 
     @GetMapping("/user/{username}")
@@ -64,11 +66,39 @@ public class PlaylistController {
     @GetMapping("/user/{username}/{id}")
     public ResponseEntity<?> getPlayListById(@PathVariable Long id) {
         Optional<Playlist> playList = playlistService.findById(id);
-        if (playList == null) {
+        if (!playList.isPresent()) {
             System.out.println("Playlist with id : " + id + "not found");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(playList, HttpStatus.OK);
         }
     }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Playlist> editPlaylist(@PathVariable Long id, @RequestBody Playlist playList) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        playList.setEditAt(timestamp);
+        playList.setId(id);
+        if (playList.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            playlistService.save(playList);
+            return new ResponseEntity<>(playList, HttpStatus.OK);
+        }
+    }
+
+    @PutMapping("/user/edit/{username}/{id}")
+    public ResponseEntity<Playlist> updatePlayListByUser(@PathVariable String username, @RequestBody Playlist playList, @PathVariable Long id) {
+        if (playlistService.findById(id) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            User user = userService.findByUsername(username);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            playList.setEditAt(timestamp);
+            playList.setUser(user);
+            playlistService.save(playList);
+            return new ResponseEntity<>(playList, HttpStatus.OK);
+        }
+    }
+
 }
