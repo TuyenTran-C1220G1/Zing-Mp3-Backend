@@ -4,10 +4,11 @@ import com.example.zingmp3.model.Genre;
 
 import com.example.zingmp3.repository.IGenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class GenreService implements IGenreService{
     @Autowired
     IGenreRepository genreRepository;

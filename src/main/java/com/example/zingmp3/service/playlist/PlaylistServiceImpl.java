@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,8 @@ public class PlaylistServiceImpl implements IPlaylistService{
 
     @Override
     public Playlist save(Playlist playlist) {
+        Date date = new java.util.Date();
+        playlist.setCreateAt(date);
         return playlistRepository.save(playlist);
     }
 
@@ -62,5 +65,15 @@ public class PlaylistServiceImpl implements IPlaylistService{
         playlist.setSongs(songs);
         playlistRepository.save(playlist);
         return playlist;
+    }
+
+    @Override
+    public List<Playlist> findAllByViewsOrderByViews() {
+        return playlistRepository.findAllByViewsOrderByViews();
+    }
+
+    @Override
+    public List<Playlist> findAllByUserUsername(String username) {
+        return playlistRepository.findAllByUserUsername(username);
     }
 }

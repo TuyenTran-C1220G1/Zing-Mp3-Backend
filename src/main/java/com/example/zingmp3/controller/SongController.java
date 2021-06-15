@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -35,6 +38,11 @@ public class SongController {
         return new ResponseEntity<Page<Song>>(songService.findAllByStatus(status, pageable), HttpStatus.OK);
     }
 
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Optional<Song>> getDetailSong(@PathVariable Long id) {
+        return new ResponseEntity<Optional<Song>>(songService.findById(id), HttpStatus.OK);
+    }
+
     @GetMapping("/top")
     public ResponseEntity<?> getTopSong() {
         boolean status = true;
@@ -47,8 +55,14 @@ public class SongController {
         return new ResponseEntity<>(songService.sortByView(status), HttpStatus.OK);
     }
 
+    @GetMapping("/yoursongs")
+    public ResponseEntity<?> songOfUser() {
+        return new ResponseEntity<>(songService.songOfUser(), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> createSong(@RequestBody Song song) {
+        song.setCreateAt(Date.valueOf(LocalDate.now()));
         User currentUser = userService.getCurrentUser();
         Optional<Playlist> playlistRoot = playlistService.findById(currentUser.getPlaylistRootId());
         if (playlistRoot.isPresent()) {
@@ -73,10 +87,13 @@ public class SongController {
     @PutMapping("/{id}")
     public ResponseEntity<Song> updateProduct(@PathVariable Long id, @RequestBody Song song) {
         Optional<Song> songOptional = songService.findById(id);
+        song.setEditAt(Date.valueOf(LocalDate.now()));
         return songOptional.map(song1 -> {
             song.setId(song1.getId());
             songService.save(song);
             return new ResponseEntity<>(song, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+
 }
