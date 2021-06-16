@@ -26,8 +26,12 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<?> edit(@RequestBody User editUser) {
+
         User currentUser = userService.getCurrentUser();
-        currentUser.setUsername(editUser.getUsername());
+        
+        if(editUser.getAvatar().isEmpty()){
+            editUser.setAvatar(currentUser.getAvatar());
+        }
         currentUser.setAddress(editUser.getAddress());
         currentUser.setEmail(editUser.getEmail());
         currentUser.setPhone(editUser.getPhone());
