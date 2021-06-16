@@ -23,7 +23,8 @@ public class Playlist {
     @Lob
     private String description;
 
-    private String type;
+    @ManyToOne
+    private Genre genre;
 
     private String image;
 

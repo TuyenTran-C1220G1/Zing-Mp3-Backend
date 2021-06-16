@@ -2,14 +2,21 @@ package com.example.zingmp3.service.playlist;
 
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
+import com.example.zingmp3.model.User;
 import com.example.zingmp3.repository.IPlaylistRepository;
 import com.example.zingmp3.repository.ISongRepository;
+import com.example.zingmp3.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +28,13 @@ public class PlaylistServiceImpl implements IPlaylistService{
 
     @Autowired
     private ISongRepository songRepository;
+
+    @Autowired
+    private IUserService userService;
     @Override
-    public List<Playlist> findAll(@RequestParam int page, @RequestParam int size) {
-        return playlistRepository.findAll();
+    public List<Playlist> findAll(int page, int size) {
+        PageRequest pageRequest =   PageRequest.of(page,size);
+        return playlistRepository.findAll(pageRequest).getContent();
     }
 
     @Override
@@ -32,8 +43,20 @@ public class PlaylistServiceImpl implements IPlaylistService{
     }
 
     @Override
+    public Playlist findPlaylistById(Long id) {
+        return playlistRepository.findPlaylistById(id);
+    }
+
+    @Override
+    public List<Playlist> findPlaylistByUserId(Long id) {
+        return playlistRepository.findPlaylistByUserId(id);
+    }
+
+    @Override
     public Playlist save(Playlist playlist) {
         Date date = new java.util.Date();
+        User user = userService.getCurrentUser();
+        playlist.setUser(user);
         playlist.setCreateAt(date);
         return playlistRepository.save(playlist);
     }
@@ -50,7 +73,8 @@ public class PlaylistServiceImpl implements IPlaylistService{
 
     @Override
     public List<Playlist> findAllByCreatedTimeOrderByCreatedTime() {
-        return playlistRepository.findAllByCreatedTimeOrderByCreatedTime();
+        Boolean status = true;
+        return playlistRepository.findAllByCreatedTimeOrderByCreatedTime(status);
     }
 
     @Override
@@ -69,11 +93,29 @@ public class PlaylistServiceImpl implements IPlaylistService{
 
     @Override
     public List<Playlist> findAllByViewsOrderByViews() {
-        return playlistRepository.findAllByViewsOrderByViews();
+        Boolean status = true;
+        return playlistRepository.findAllByViewsOrderByViews(status);
     }
 
+//    @Override
+//    public Playlist edit(Playlist playlist) {
+//        Date date = new java.util.Date();
+//        Playlist playlist1 = findPlaylistById(playlist.getId());
+//        playlist1.setEditAt(date);
+//        playlist1.setNamePlaylist(playlist.getNamePlaylist());
+//        playlist1.setDescription(playlist.getDescription());
+//        playlist1.setType(playlist.getType());
+//        playlist1.setImage(playlist.getImage());
+//        return playlist1;
+//    }
+
+
     @Override
-    public List<Playlist> findAllByUserUsername(String username) {
-        return playlistRepository.findAllByUserUsername(username);
+    public List<Playlist> playListOfUser() {
+        User currentUser = userService.getCurrentUser();
+        List<Playlist> playlistOptional = findPlaylistByUserId(currentUser.getId());
+        return playlistOptional;
     }
+
+
 }

@@ -1,7 +1,6 @@
 package com.example.zingmp3.service.playlist;
 
 import com.example.zingmp3.model.Playlist;
-import com.example.zingmp3.model.Song;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,10 +10,13 @@ import java.util.Optional;
 
 
 public interface IPlaylistService {
-    List<Playlist> findAll(@RequestParam int page, @RequestParam int size);
+    List<Playlist> findAll(int page,int size);
 
     Optional<Playlist> findById(Long id);
 
+    Playlist findPlaylistById(Long id);
+
+    List<Playlist> findPlaylistByUserId(Long id);
     Playlist save(Playlist playlist);
 
     List<Playlist> findAll();
@@ -27,7 +29,9 @@ public interface IPlaylistService {
 
     List<Playlist> findAllByViewsOrderByViews();
 
-    List<Playlist> findAllByUserUsername(String username);
+//    Playlist edit(Playlist playlist);
+
+    List<Playlist> playListOfUser();
 
 
 }
