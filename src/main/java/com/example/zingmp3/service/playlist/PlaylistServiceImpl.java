@@ -2,28 +2,35 @@ package com.example.zingmp3.service.playlist;
 
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
+import com.example.zingmp3.model.User;
 import com.example.zingmp3.repository.IPlaylistRepository;
 import com.example.zingmp3.repository.ISongRepository;
+import com.example.zingmp3.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PlaylistServiceImpl implements IPlaylistService{
+public class PlaylistServiceImpl implements IPlaylistService {
+    @Autowired
+    private UserService userService;
+
     @Autowired
     private IPlaylistRepository playlistRepository;
 
     @Autowired
     private ISongRepository songRepository;
+
     @Override
-    public List<Playlist> findAll(@RequestParam int page, @RequestParam int size) {
-        return playlistRepository.findAll();
+    public List<Playlist> findAll(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return playlistRepository.findAll(pageRequest).getContent();
     }
 
     @Override
@@ -33,8 +40,11 @@ public class PlaylistServiceImpl implements IPlaylistService{
 
     @Override
     public Playlist save(Playlist playlist) {
+        User currentUser = userService.getCurrentUser();
+        playlist.setUser(currentUser);
         Date date = new java.util.Date();
         playlist.setCreateAt(date);
+        playlist.setStatus(true);
         return playlistRepository.save(playlist);
     }
 
@@ -45,7 +55,7 @@ public class PlaylistServiceImpl implements IPlaylistService{
 
     @Override
     public Page<Playlist> findAllByStatus(Boolean status, Pageable pageable) {
-        return playlistRepository.findAllSongByStatus(status,pageable);
+        return playlistRepository.findAllSongByStatus(status, pageable);
     }
 
     @Override

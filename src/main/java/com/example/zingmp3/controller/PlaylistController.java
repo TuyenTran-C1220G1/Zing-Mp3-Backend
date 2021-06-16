@@ -27,8 +27,8 @@ public class PlaylistController {
     IPlaylistService playlistService;
 
     @GetMapping("/list")
-    public ResponseEntity<?> getAllPlayList(){
-        List<Playlist> playlists = playlistService.findAll();
+    public ResponseEntity<?> getAllPlayList(@RequestParam int page, @RequestParam int size){
+        List<Playlist> playlists = playlistService.findAll(page,size);
         if (playlists.size() == 0) {
             return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
         }
