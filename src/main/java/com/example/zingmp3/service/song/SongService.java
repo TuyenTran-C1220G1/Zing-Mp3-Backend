@@ -53,8 +53,8 @@ public class SongService implements ISongService {
     }
 
     @Override
-    public List<Song> sortByView(Boolean status) {
-        return iSongRepository.findSongByStatusOrderByViewsDesc(status);
+    public List<Song> sortByDate(Boolean status) {
+        return iSongRepository.findSongByStatusOrderByCreateAtDesc(status);
     }
 
     @Override
