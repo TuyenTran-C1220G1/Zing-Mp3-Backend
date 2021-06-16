@@ -18,7 +18,7 @@ public interface ISongService {
 
     List<Song> sortByLike(Boolean status);
 
-    List<Song> sortByView(Boolean status);
+    List<Song> sortByDate(Boolean status);
 
     public List<Song> songOfUser();
 }

@@ -13,9 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
+
 import java.util.Optional;
 
 @RestController
@@ -49,10 +47,10 @@ public class SongController {
         return new ResponseEntity<>(songService.sortByLike(status), HttpStatus.OK);
     }
 
-    @GetMapping("/views")
-    public ResponseEntity<?> getViewsSong() {
+    @GetMapping("/new")
+    public ResponseEntity<?> getNewSong() {
         boolean status = true;
-        return new ResponseEntity<>(songService.sortByView(status), HttpStatus.OK);
+        return new ResponseEntity<>(songService.sortByDate(status), HttpStatus.OK);
     }
 
     @GetMapping("/yoursongs")
@@ -62,7 +60,9 @@ public class SongController {
 
     @PostMapping
     public ResponseEntity<?> createSong(@RequestBody Song song) {
-        song.setCreateAt(Date.valueOf(LocalDate.now()));
+        java.util.Date createAt=new java.util.Date();
+        song.setCreateAt(createAt);
+        song.setStatus(true);
         User currentUser = userService.getCurrentUser();
         Optional<Playlist> playlistRoot = playlistService.findById(currentUser.getPlaylistRootId());
         if (playlistRoot.isPresent()) {
@@ -85,9 +85,16 @@ public class SongController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Song> updateProduct(@PathVariable Long id, @RequestBody Song song) {
+    public ResponseEntity<Song> updateSong(@PathVariable Long id, @RequestBody Song song) {
         Optional<Song> songOptional = songService.findById(id);
-        song.setEditAt(Date.valueOf(LocalDate.now()));
+        if(song.getImageUrl().isEmpty()){
+            song.setImageUrl(songOptional.get().getImageUrl());
+        }
+        if(song.getSongUrl().isEmpty()){
+            song.setSongUrl(songOptional.get().getImageUrl());
+        }
+        java.util.Date editAt=new java.util.Date();
+        song.setEditAt(editAt);
         return songOptional.map(song1 -> {
             song.setId(song1.getId());
             songService.save(song);
