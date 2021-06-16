@@ -17,7 +17,6 @@ public class UserController {
     @PutMapping("/users")
     public ResponseEntity<?> edit(@RequestBody User editUser) {
         User currentUser= userService.getCurrentUser();
-
         currentUser.setEmail(editUser.getEmail());
         userService.save(currentUser);
         return new ResponseEntity<>(currentUser, HttpStatus.OK);

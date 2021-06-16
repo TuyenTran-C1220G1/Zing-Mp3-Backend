@@ -20,5 +20,5 @@ public interface ISongService {
 
     List<Song> sortByView(Boolean status);
 
-    public List<Song> songOfUser();
+    List<Song> songOfUser();
 }
