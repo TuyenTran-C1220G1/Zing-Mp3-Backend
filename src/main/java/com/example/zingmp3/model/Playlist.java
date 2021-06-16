@@ -33,6 +33,10 @@ public class Playlist {
 
     private Boolean status;
 
+    private Long views = 0L;
+
+    private Long likes = 0L;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Song> songs = new ArrayList<>();
 

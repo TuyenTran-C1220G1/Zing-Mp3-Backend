@@ -30,7 +30,7 @@ public class Artist {
 
     private Long likes;
 
-    private String avata;
+    private String avatar;
 
     @OneToMany
     private List<Song> songs;
