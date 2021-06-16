@@ -89,7 +89,7 @@ public class PlaylistController {
 
     @PutMapping("/user/edit/{username}/{id}")
     public ResponseEntity<Playlist> updatePlayListByUser(@PathVariable String username, @RequestBody Playlist playList, @PathVariable Long id) {
-        if (playlistService.findById(id) == null) {
+        if (!playlistService.findById(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             User user = userService.findByUsername(username);
