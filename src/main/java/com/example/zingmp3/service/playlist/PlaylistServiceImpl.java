@@ -54,10 +54,12 @@ public class PlaylistServiceImpl implements IPlaylistService{
 
     @Override
     public Playlist save(Playlist playlist) {
+        Boolean status = true;
         Date date = new java.util.Date();
         User user = userService.getCurrentUser();
         playlist.setUser(user);
         playlist.setCreateAt(date);
+        playlist.setStatus(status);
         return playlistRepository.save(playlist);
     }
 

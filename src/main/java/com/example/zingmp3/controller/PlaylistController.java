@@ -31,13 +31,22 @@ public class PlaylistController {
     @Autowired
     IPlaylistService playlistService;
 
-    @GetMapping("/list")
-    public ResponseEntity<?> getAllPlayList(@RequestParam int page, @RequestParam int size){
+        @GetMapping("/list")
+    public ResponseEntity<?> getAllPlayList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         List<Playlist> playlists = playlistService.findAll(page,size);
-        if (playlists.size() == 0) {
-            return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
+        Boolean status = true;
+        List<Playlist> playlists1 = null;
+        for (int i = 0; i < playlists.size(); i++) {
+            if (!playlists.get(i).getNamePlaylist().equals("PlaylistRoot")){
+                if (playlists.get(i).equals(status)){
+                    playlists1.add(playlists.get(i));
+                    return new ResponseEntity<>(playlists1,HttpStatus.OK);
+                }
+            }
         }
-        return new ResponseEntity<>(playlists, HttpStatus.OK);
+        String mes = "Lỗi !";
+        return new ResponseEntity<>(mes, HttpStatus.NOT_FOUND);
+//        return new ResponseEntity<>(playlists,HttpStatus.OK);
     }
 
     @PostMapping("/create")
@@ -78,11 +87,13 @@ public class PlaylistController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Playlist> editPlaylist(@PathVariable Long id, @RequestBody Playlist playList) {
-        playlistService.findById(id);
-        Optional<Playlist> songOptional = playlistService.findById(id);
+        Optional<Playlist> playlistOptional = playlistService.findById(id);
+        if(playList.getImage().isEmpty()){
+            playList.setImage(playlistOptional.get().getImage());
+        }
         playList.setEditAt(Date.valueOf(LocalDate.now()));
-        return songOptional.map(song1 -> {
-            playList.setId(song1.getId());
+        return playlistOptional.map(playlist -> {
+            playList.setId(playList.getId());
             playlistService.save(playList);
             return new ResponseEntity<>(playList, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

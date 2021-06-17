@@ -23,10 +23,11 @@ public interface IPlaylistRepository extends JpaRepository<Playlist,Long> {
     @Query(value = "select * from playlist order by views desc limit 5", nativeQuery = true)
     List<Playlist> findAllByViewsOrderByViews(boolean status);
 
-//    @Query(value = "select * from playlist where user_id =?", nativeQuery = true)
+    //    @Query(value = "select * from playlist where user_id =?", nativeQuery = true)
     List<Playlist> findPlaylistByUserId(Long id);
 
     Playlist findPlaylistById(Long id);
+
 
 
 }
