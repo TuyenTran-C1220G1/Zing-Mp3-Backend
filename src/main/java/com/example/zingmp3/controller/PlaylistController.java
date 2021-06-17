@@ -65,16 +65,6 @@ public class PlaylistController {
         return new ResponseEntity<>(playlistService.playListOfUser(), HttpStatus.OK);
     }
 
-//    @GetMapping("/user/{username}/{id}")
-//    public ResponseEntity<?> getPlayListById(@PathVariable Long id) {
-//        Optional<Playlist> playList = playlistService.findById(id);
-//        if (!playList.isPresent()) {
-//            System.out.println("Playlist with id : " + id + "not found");
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        } else {
-//            return new ResponseEntity<>(playList, HttpStatus.OK);
-//        }
-//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Playlist> editPlaylist(@PathVariable Long id, @RequestBody Playlist playList) {
@@ -95,5 +85,13 @@ public class PlaylistController {
         return new ResponseEntity<>(playList, HttpStatus.OK);
     }
 
-
+    @GetMapping("/{id}/songs")
+    public ResponseEntity<List<Song>> getAllSongById(@PathVariable Long id) {
+        Optional<Playlist> playlist = playlistService.findById(id);
+        if(playlist.isPresent()){
+        List<Song> songs=playlist.get().getSongs();
+            return new ResponseEntity<>(songs, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
