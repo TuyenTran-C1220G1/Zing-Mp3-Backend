@@ -32,7 +32,7 @@ public class Playlist {
 
     private Date editAt;
 
-    private Boolean status;
+    private Boolean status= true;
 
     private Long views = 0L;
 

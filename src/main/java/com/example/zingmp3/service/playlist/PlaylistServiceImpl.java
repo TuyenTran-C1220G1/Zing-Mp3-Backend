@@ -2,6 +2,7 @@ package com.example.zingmp3.service.playlist;
 
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
+import com.example.zingmp3.model.User;
 import com.example.zingmp3.repository.IPlaylistRepository;
 import com.example.zingmp3.repository.ISongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class PlaylistServiceImpl implements IPlaylistService{
 
     @Autowired
     private ISongRepository songRepository;
+
+
     @Override
     public List<Playlist> findAll(@RequestParam int page, @RequestParam int size) {
         return playlistRepository.findAll();
@@ -75,5 +78,10 @@ public class PlaylistServiceImpl implements IPlaylistService{
     @Override
     public List<Playlist> findAllByUserUsername(String username) {
         return playlistRepository.findAllByUserUsername(username);
+    }
+
+    @Override
+    public List<Playlist> findAllByUser(User user,Boolean status) {
+        return playlistRepository.findPlaylistByUserAndStatus(user,status);
     }
 }

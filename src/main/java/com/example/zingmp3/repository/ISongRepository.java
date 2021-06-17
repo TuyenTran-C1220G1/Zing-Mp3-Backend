@@ -21,6 +21,6 @@ public interface ISongRepository extends JpaRepository<Song, Long> {
     @Query(value = "select * from song order by views desc limit 5", nativeQuery = true)
     List<Song> findSongByStatusOrderByViewsDesc(Boolean status);
 
-    @Query(value = "select * from song order by id desc limit 5", nativeQuery = true)
+    @Query(value = "select * from song order by id desc limit 10", nativeQuery = true)
     List<Song> findSongByStatusOrderByCreateAtDesc(Boolean status);
 }

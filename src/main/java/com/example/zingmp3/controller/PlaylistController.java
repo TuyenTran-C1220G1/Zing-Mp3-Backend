@@ -101,4 +101,11 @@ public class PlaylistController {
         }
     }
 
+    @GetMapping("/myPlaylist")
+    public ResponseEntity<List<Playlist>> findAllByUser() {
+        User currentUser= userService.getCurrentUser();
+        List<Playlist> playlists = playlistService.findAllByUser(currentUser,true);
+        return new ResponseEntity<>(playlists, HttpStatus.OK);
+    }
+
 }

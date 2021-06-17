@@ -2,6 +2,7 @@ package com.example.zingmp3.service.playlist;
 
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
+import com.example.zingmp3.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,5 +30,6 @@ public interface IPlaylistService {
 
     List<Playlist> findAllByUserUsername(String username);
 
+    List<Playlist> findAllByUser(User user, Boolean status);
 
 }
