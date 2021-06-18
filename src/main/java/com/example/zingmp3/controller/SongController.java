@@ -64,6 +64,7 @@ public class SongController {
         song.setCreateAt(createAt);
         song.setStatus(true);
         User currentUser = userService.getCurrentUser();
+//        song.setStatus(true);
         Optional<Playlist> playlistRoot = playlistService.findById(currentUser.getPlaylistRootId());
         if (playlistRoot.isPresent()) {
             playlistRoot.get().getSongs().add(song);
