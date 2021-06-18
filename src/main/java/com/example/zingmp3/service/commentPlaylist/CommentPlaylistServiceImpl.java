@@ -1,7 +1,11 @@
 package com.example.zingmp3.service.commentPlaylist;
 
 import com.example.zingmp3.model.CommentPlayList;
+import com.example.zingmp3.model.Playlist;
+import com.example.zingmp3.model.User;
 import com.example.zingmp3.repository.ICommentPlaylistRepository;
+import com.example.zingmp3.service.playlist.IPlaylistService;
+import com.example.zingmp3.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +17,13 @@ import java.util.Optional;
 public class CommentPlaylistServiceImpl implements ICommentPlaylistService {
     @Autowired
     ICommentPlaylistRepository commentPlaylistRepository;
+
+    @Autowired
+    IUserService userService;
+
+    @Autowired
+    IPlaylistService playlistService;
+
 
     @Override
     public List<CommentPlayList> getAllByPlayListId(Long id,int page,int size) {
@@ -36,6 +47,10 @@ public class CommentPlaylistServiceImpl implements ICommentPlaylistService {
 
     @Override
     public CommentPlayList save(CommentPlayList commentOfPlayList) {
+        User user = userService.getCurrentUser();
+        List<Playlist> playlist = playlistService.findPlaylistByUserId(user.getId());
+        commentOfPlayList.setUser(user);
+        commentOfPlayList.setPlaylist((Playlist) playlist);
         return commentPlaylistRepository.save(commentOfPlayList);
     }
 

@@ -92,7 +92,10 @@ public class PlaylistController {
             playList.setImage(playlistOptional.get().getImage());
         }
         playList.setEditAt(Date.valueOf(LocalDate.now()));
-        return playlistOptional.map(playlist -> {
+        playList.setLikes(playlistOptional.get().getLikes());
+        playList.setViews(playlistOptional.get().getViews());
+        playList.setStatus(true);
+        return playlistOptional.map(playlist1 -> {
             playList.setId(playList.getId());
             playlistService.save(playList);
             return new ResponseEntity<>(playList, HttpStatus.OK);
