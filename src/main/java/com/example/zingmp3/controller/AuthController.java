@@ -89,6 +89,5 @@ public class AuthController {
         user.setRoles(roles);
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
-
     }
 }
