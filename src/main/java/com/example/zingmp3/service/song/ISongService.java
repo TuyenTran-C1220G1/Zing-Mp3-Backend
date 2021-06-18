@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ISongService {
-    Page<Song> findAllByStatus(Boolean status, Pageable pageable);
+    Page<Song> findAllByStatus(boolean status, Pageable pageable);
 
     Song save(Song song);
 
@@ -16,9 +16,9 @@ public interface ISongService {
 
     Optional<Song> findById(Long id);
 
-    List<Song> sortByLike(Boolean status);
+    List<Song> sortByLike(boolean status);
 
-    List<Song> sortByDate(Boolean status);
+    List<Song> sortByDate(boolean status);
 
     List<Song> songOfUser();
 }

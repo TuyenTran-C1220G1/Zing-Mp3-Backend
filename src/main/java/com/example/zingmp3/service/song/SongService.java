@@ -28,7 +28,7 @@ public class SongService implements ISongService {
     IPlaylistService playlistService;
 
     @Override
-    public Page<Song> findAllByStatus(Boolean status, Pageable pageable) {
+    public Page<Song> findAllByStatus(boolean status, Pageable pageable) {
         return iSongRepository.findAllSongByStatus(status, pageable);
     }
 
@@ -48,12 +48,12 @@ public class SongService implements ISongService {
     }
 
     @Override
-    public List<Song> sortByLike(Boolean status) {
+    public List<Song> sortByLike(boolean status) {
         return iSongRepository.findSongByStatusOrderByLikesDesc(status);
     }
 
     @Override
-    public List<Song> sortByDate(Boolean status) {
+    public List<Song> sortByDate(boolean status) {
         return iSongRepository.findSongByStatusOrderByCreateAtDesc(status);
     }
 

@@ -33,12 +33,12 @@ public class SongController {
     @GetMapping
     public ResponseEntity<Page<Song>> getAllSong(Pageable pageable) {
         boolean status = true;
-        return new ResponseEntity<Page<Song>>(songService.findAllByStatus(status, pageable), HttpStatus.OK);
+        return new ResponseEntity<>(songService.findAllByStatus(status, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<Optional<Song>> getDetailSong(@PathVariable Long id) {
-        return new ResponseEntity<Optional<Song>>(songService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(songService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/top")
@@ -64,16 +64,15 @@ public class SongController {
         song.setCreateAt(createAt);
         song.setStatus(true);
         User currentUser = userService.getCurrentUser();
-//        song.setStatus(true);
         Optional<Playlist> playlistRoot = playlistService.findById(currentUser.getPlaylistRootId());
         if (playlistRoot.isPresent()) {
             playlistRoot.get().getSongs().add(song);
             return new ResponseEntity<>(songService.save(song), HttpStatus.OK);
         }
-        String mes = "lỗi vkl";
+        String mes = "error";
         return new ResponseEntity<>(mes, HttpStatus.NOT_FOUND);
     }
-
+// sua lai method put
     @GetMapping("/{id}")
     public ResponseEntity<?> deleteSong(@PathVariable Long id) {
         Optional<Song> songOptional = songService.findById(id);
@@ -102,6 +101,4 @@ public class SongController {
             return new ResponseEntity<>(song, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
-
 }
