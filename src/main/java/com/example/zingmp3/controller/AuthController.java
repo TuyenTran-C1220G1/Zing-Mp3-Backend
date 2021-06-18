@@ -66,30 +66,29 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
-        try {
-            Iterable<User> users = userService.findAll();
-            for (User currentUser : users) {
-                if(currentUser.getUsername().equals(user.getUsername())){
-                    return new ResponseEntity<>("dbusername",HttpStatus.BAD_REQUEST);
-                }else if(currentUser.getPhone().equals(user.getPhone())){
-                    return new ResponseEntity<>("dbphone",HttpStatus.BAD_REQUEST);
-                }
+
+        Iterable<User> users = userService.findAll();
+        for (User currentUser : users) {
+            if(currentUser.getUsername().equals(user.getUsername())){
+                return new ResponseEntity<>("dbusername",HttpStatus.BAD_REQUEST);
+            }else if(currentUser.getPhone().equals(user.getPhone())){
+                return new ResponseEntity<>("dbphone",HttpStatus.BAD_REQUEST);
             }
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-            Set<Role> roles = new HashSet<>();
-            Optional<Role> role = roleService.findById(1L);
-
-            Playlist newPlaylist =  new Playlist();
-            newPlaylist.setNamePlaylist("Playlist_Root");
-            Playlist playlist =  playlistService.save(newPlaylist);
-            user.setPlaylistRootId(playlist.getId());
-            roles.add(role.get());
-            user.setRoles(roles);
-            userService.save(user);
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Set<Role> roles = new HashSet<>();
+        Optional<Role> role = roleService.findById(1L);
+
+        Playlist newPlaylist =  new Playlist();
+        newPlaylist.setNamePlaylist("Playlist_Root");
+        Playlist playlist =  playlistService.save(newPlaylist);
+        playlist.setStatus(false);
+        user.setPlaylistRootId(playlist.getId());
+        roles.add(role.get());
+        user.setRoles(roles);
+        userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+
     }
 }

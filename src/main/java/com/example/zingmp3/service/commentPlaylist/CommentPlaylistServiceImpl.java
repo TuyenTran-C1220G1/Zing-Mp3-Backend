@@ -26,32 +26,33 @@ public class CommentPlaylistServiceImpl implements ICommentPlaylistService {
 
 
     @Override
-    public List<CommentPlayList> getAllByPlayListId(Long id,int page,int size) {
-        return commentPlaylistRepository.getAllByPlayListId(id,page,size);
+    public List<CommentPlayList> getAllByPlayListId(Long id) {
+        return commentPlaylistRepository.getAllByPlayListId(id);
     }
 
     @Override
     public List<CommentPlayList> findAll(int page, int size) {
-        return (List<CommentPlayList>) commentPlaylistRepository.findAll();
+        return null;
     }
 
     @Override
     public List<CommentPlayList> findAll() {
-        return (List<CommentPlayList>) commentPlaylistRepository.findAll();
+        return null;
     }
 
     @Override
     public Optional<CommentPlayList> findById(Long id) {
-        return commentPlaylistRepository.findById(id);
+        return Optional.empty();
     }
 
     @Override
     public CommentPlayList save(CommentPlayList commentOfPlayList) {
-        User user = userService.getCurrentUser();
-        List<Playlist> playlist = playlistService.findPlaylistByUserId(user.getId());
-        commentOfPlayList.setUser(user);
-        commentOfPlayList.setPlaylist((Playlist) playlist);
-        return commentPlaylistRepository.save(commentOfPlayList);
+//        User user = userService.getCurrentUser();
+//        List<Playlist> playlist = playlistService.findPlaylistByUserId(user.getId());
+//        commentOfPlayList.setUser(user);
+//        commentOfPlayList.setPlaylist((Playlist) playlist);
+//        return commentPlaylistRepository.save(commentOfPlayList);
+        return null;
     }
 
     @Override

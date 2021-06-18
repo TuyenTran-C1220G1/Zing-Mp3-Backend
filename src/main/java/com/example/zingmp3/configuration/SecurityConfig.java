@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
-                .antMatchers("/", "/login", "/register","/greetings",
+                .antMatchers("/", "/login", "/register","/greetings","/playlists/news",
                         "/songs/top","/songs","/artists/top","/songs/new","/playlists/topview","/songs/detail/**",
                         "/playlists/list","/playlists/ratings","/playlists/list?{page}&{size}").permitAll()
                 .antMatchers("/playlists/**","/artists/**","/genre/**","/commentPlaylists/**").hasRole("USER")
@@ -59,3 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
     }
 }
+
+
+

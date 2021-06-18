@@ -23,8 +23,8 @@ public class CommentPlaylistController {
     IUserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<CommentPlayList>> showAllComment(@PathVariable Long id,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
-        List<CommentPlayList> commentOfPlayList = commentPlayListService.getAllByPlayListId(id,page,size);
+    public ResponseEntity<List<CommentPlayList>> showAllComment(@PathVariable Long id){
+        List<CommentPlayList> commentOfPlayList = commentPlayListService.getAllByPlayListId(id);
         return new ResponseEntity<>(commentOfPlayList, HttpStatus.OK);
     }
 
@@ -33,39 +33,4 @@ public class CommentPlaylistController {
         return new ResponseEntity(commentPlayListService.save(commentPlayList),HttpStatus.CREATED);
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<?>updateComment(@RequestBody CommentPlayList commentPlayList, @PathVariable Long id){
-        String mes = "Lỗi";
-        String mess = "Thành công";
-        commentPlayList.setId(id);
-        Optional<CommentPlayList> commentPlayList1 = commentPlayListService.findById(id);
-        User user = userService.getCurrentUser();
-        String username = user.getUsername();
-        boolean us = username.equalsIgnoreCase(commentPlayList1.get().getUser().getUsername());
-        if (us){
-            commentPlayList.setUser(commentPlayList1.get().getUser());
-            commentPlayList.setPlaylist(commentPlayList1.get().getPlaylist());
-            commentPlayListService.save(commentPlayList);
-            return new ResponseEntity<>(mess,HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(mes, HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?>deleteComment(@PathVariable Long id){
-        Optional<CommentPlayList> commentPlayList = commentPlayListService.findById(id);
-        User user = userService.getCurrentUser();
-        String username = user.getUsername();
-        boolean us = username.equalsIgnoreCase(commentPlayList.get().getUser().getUsername());
-        if (us){
-            commentPlayListService.delete(id);
-            String mess = "Thành công";
-            return new ResponseEntity<>(mess,HttpStatus.OK);
-        }else {
-            String mes = "Lỗi";
-            return new ResponseEntity<>(mes,HttpStatus.NOT_FOUND);
-        }
-
-    }
 }

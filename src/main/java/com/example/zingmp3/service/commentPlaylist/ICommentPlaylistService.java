@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ICommentPlaylistService extends IGeneralService<CommentPlayList> {
-    List<CommentPlayList> getAllByPlayListId (Long id,int page,int size);
+    List<CommentPlayList> getAllByPlayListId (Long id);
     List<CommentPlayList> findAll(int page,int size);
 
 }

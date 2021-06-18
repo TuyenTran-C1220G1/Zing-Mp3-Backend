@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ICommentPlaylistRepository extends CrudRepository<CommentPlayList, Long> {
     @Query(value = "select * from comment_play_list where playlist_id = ?;", nativeQuery = true)
-    List<CommentPlayList> getAllByPlayListId(Long id,int page,int size);
+    List<CommentPlayList> getAllByPlayListId(Long id);
 
 }
