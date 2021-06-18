@@ -7,6 +7,7 @@ import com.example.zingmp3.service.playlist.IPlaylistService;
 import com.example.zingmp3.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,12 +32,9 @@ public class PlaylistController {
     @Autowired
     IPlaylistService playlistService;
 
-    @GetMapping("/list/")
-    public ResponseEntity<?> getAllPlayList(@RequestParam int page, @RequestParam int size){
-        List<Playlist> playlists = playlistService.findAll(page,size);
-        if (playlists.size() == 0) {
-            return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/list")
+    public ResponseEntity<?> getAllPlayList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size){
+        List<Playlist> playlists = playlistService.findAllByStatus(true, page,size);
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
@@ -81,11 +79,27 @@ public class PlaylistController {
     }
 
 
-
     @GetMapping( "/detail/{id}")
     public ResponseEntity<?> detail(@PathVariable Long id) {
         Optional<Playlist> playList = playlistService.findById(id);
         return new ResponseEntity<>(playList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/songs")
+    public ResponseEntity<List<Song>> getAllSongById(@PathVariable Long id) {
+        Optional<Playlist> playlist = playlistService.findById(id);
+        if(playlist.isPresent()){
+        List<Song> songs=playlist.get().getSongs();
+            return new ResponseEntity<>(songs, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/myPlaylist")
+    public ResponseEntity<List<Playlist>> findAllByUser() {
+        User currentUser= userService.getCurrentUser();
+        List<Playlist> playlists = playlistService.findAllByUser(currentUser,true);
+        return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
     @GetMapping( "{id}")
@@ -98,24 +112,4 @@ public class PlaylistController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    @GetMapping("/{id}/songs")
-    public ResponseEntity<List<Song>> getAllSongById(@PathVariable Long id) {
-        Optional<Playlist> playlist = playlistService.findById(id);
-        if(playlist.isPresent()){
-            List<Song> songs=playlist.get().getSongs();
-            return new ResponseEntity<>(songs, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @GetMapping("/myPlaylist")
-    public ResponseEntity<List<Playlist>> findAllByUser() {
-        User currentUser= userService.getCurrentUser();
-        List<Playlist> playlists = playlistService.findAllByUser(currentUser,true);
-        return new ResponseEntity<>(playlists, HttpStatus.OK);
-    }
 }
-
-
-

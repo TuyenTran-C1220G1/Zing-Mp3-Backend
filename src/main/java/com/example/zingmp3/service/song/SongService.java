@@ -11,9 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -28,7 +26,7 @@ public class SongService implements ISongService {
     IPlaylistService playlistService;
 
     @Override
-    public Page<Song> findAllByStatus(Boolean status, Pageable pageable) {
+    public Page<Song> findAllByStatus(boolean status, Pageable pageable) {
         return iSongRepository.findAllSongByStatus(status, pageable);
     }
 
@@ -48,12 +46,12 @@ public class SongService implements ISongService {
     }
 
     @Override
-    public List<Song> sortByLike(Boolean status) {
+    public List<Song> sortByLike(boolean status) {
         return iSongRepository.findSongByStatusOrderByLikesDesc(status);
     }
 
     @Override
-    public List<Song> sortByDate(Boolean status) {
+    public List<Song> sortByDate(boolean status) {
         return iSongRepository.findSongByStatusOrderByCreateAtDesc(status);
     }
 
@@ -66,6 +64,12 @@ public class SongService implements ISongService {
             for (Song song : playlistRoot.get().getSongs()) {
                 if (song.getStatus().equals(true)) {
                     songs.add(song);
+                    Collections.sort(songs, new Comparator<Song>() {
+                        @Override
+                        public int compare(Song o1, Song o2) {
+                            return o2.getId() > o1.getId() ? 1 : -1;
+                        }
+                    });
                 }
             }
             return songs;
