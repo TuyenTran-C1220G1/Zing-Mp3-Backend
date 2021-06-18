@@ -14,8 +14,6 @@ public interface IPlaylistService {
     Optional<Playlist> findById(Long id);
 
 
-    List<Playlist> findPlaylistByUserId(Long id);
-
     Playlist save(Playlist playlist);
 
 
@@ -27,8 +25,6 @@ public interface IPlaylistService {
     // lay ra top 5 playlist nghe nhieu nhat
     List<Playlist> findAllByViewsOrderByViews();
 
-    List<Playlist> playListOfUser();
-
-    List<Playlist> findAllByUser(User user, boolean status);
+    List<Playlist>findPlaylistByUserAndStatusOrderByIdDesc(User user, boolean status);
 
 }

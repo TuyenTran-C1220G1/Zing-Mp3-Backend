@@ -27,7 +27,7 @@ public class SongService implements ISongService {
 
     @Override
     public Page<Song> findAllByStatus(boolean status, Pageable pageable) {
-        return iSongRepository.findAllSongByStatus(status, pageable);
+        return iSongRepository.findAllSongByStatusOrderByIdDesc(status, pageable);
     }
 
     @Override

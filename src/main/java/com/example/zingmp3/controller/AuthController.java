@@ -83,6 +83,7 @@ public class AuthController {
         Playlist newPlaylist =  new Playlist();
         newPlaylist.setNamePlaylist("Playlist_Root");
         Playlist playlist =  playlistService.save(newPlaylist);
+        playlist.setStatus(false);
         user.setPlaylistRootId(playlist.getId());
         roles.add(role.get());
         user.setRoles(roles);
