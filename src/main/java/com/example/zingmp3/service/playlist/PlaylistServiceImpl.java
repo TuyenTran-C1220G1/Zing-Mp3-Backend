@@ -29,7 +29,7 @@ public class PlaylistServiceImpl implements IPlaylistService{
     @Override
     public List<Playlist> findAllByStatus(boolean status,int page, int size) {
         PageRequest pageRequest = PageRequest.of(page,size);
-        Page<Playlist> playlists = playlistRepository.findAllByStatus(status,pageRequest);
+        Page<Playlist> playlists = playlistRepository.findAllByStatusOrderByIdDesc(status,pageRequest);
         return playlists.getContent();
     }
 
@@ -38,10 +38,6 @@ public class PlaylistServiceImpl implements IPlaylistService{
         return playlistRepository.findById(id);
     }
 
-    @Override
-    public List<Playlist> findPlaylistByUserId(Long id) {
-        return playlistRepository.findPlaylistByUserId(id);
-    }
 
     @Override
     public Playlist save(Playlist playlist) {
@@ -80,15 +76,8 @@ public class PlaylistServiceImpl implements IPlaylistService{
     }
 
     @Override
-    public List<Playlist> playListOfUser() {
-        User currentUser = userService.getCurrentUser();
-        List<Playlist> playlistOptional = findPlaylistByUserId(currentUser.getId());
-        return playlistOptional;
-    }
-
-    @Override
-    public List<Playlist> findAllByUser(User user,boolean status) {
-        return playlistRepository.findPlaylistByUserAndStatus(user,status);
+    public List<Playlist>findPlaylistByUserAndStatusOrderByIdDesc(User user, boolean status) {
+        return playlistRepository.findPlaylistByUserAndStatusOrderByIdDesc(user,status);
     }
 
 }

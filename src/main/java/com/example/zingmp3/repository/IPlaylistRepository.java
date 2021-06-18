@@ -21,19 +21,16 @@ public interface IPlaylistRepository extends JpaRepository<Playlist,Long> {
     List<Playlist> findAllByCreatedTimeOrderByCreatedTime(boolean status);
 
 
-    List<Playlist> findAllByUserUsername(String username);
-
     // playlist nghe nhieu nhat
     @Query(value = "select * from playlist where status = ? order by views desc limit 5", nativeQuery = true)
     List<Playlist> findAllByViewsOrderByViews(boolean status);
 
-//    @Query(value = "select * from playlist where user_id =?", nativeQuery = true)
-    List<Playlist> findPlaylistByUserId(Long id);
 
-    Page<Playlist> findAllByStatus(boolean status, Pageable pageable);
+    List<Playlist> findAllByUserOrderByIdDesc(User user);
 
+    Page<Playlist> findAllByStatusOrderByIdDesc(boolean status, Pageable pageable);
 
-    List<Playlist> findPlaylistByUserAndStatus(User user, boolean status);
+    List<Playlist> findPlaylistByUserAndStatusOrderByIdDesc(User user, boolean status);
 
 
 }

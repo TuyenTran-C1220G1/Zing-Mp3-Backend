@@ -60,6 +60,10 @@ public class SongController {
 
     @PostMapping
     public ResponseEntity<?> createSong(@RequestBody Song song) {
+        String imageDefault ="https://firebasestorage.googleapis.com/v0/b/zingmp3-4bcaf.appspot.com/o/2si2if4f0bl?alt=media&token=5a71f104-7abc-4fbf-aa6a-b67d0b113ef1";
+        if(song.getImageUrl().isEmpty()){
+            song.setImageUrl(imageDefault);
+        }
         java.util.Date createAt=new java.util.Date();
         song.setCreateAt(createAt);
         song.setStatus(true);
@@ -95,6 +99,8 @@ public class SongController {
         }
         java.util.Date editAt=new java.util.Date();
         song.setEditAt(editAt);
+        song.setLikes(songOptional.get().getLikes());
+        song.setViews(songOptional.get().getViews());
         return songOptional.map(song1 -> {
             song.setId(song1.getId());
             songService.save(song);
