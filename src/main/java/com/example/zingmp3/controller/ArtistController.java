@@ -26,7 +26,7 @@ public class ArtistController {
     @GetMapping
     public ResponseEntity<?> getAll(){
         List<Artist> artists = artistService.findAll();
-        if (artists.size() == 0) {
+        if (artists.isEmpty()) {
             return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(artists, HttpStatus.OK);
@@ -56,7 +56,7 @@ public class ArtistController {
     @GetMapping("/search/{name}")
     public ResponseEntity<?> findByName(@PathVariable("name") String name){
         List<Artist> artists = artistService.findAllByNameArtist(name);
-        if (!artists.isEmpty()) {
+        if (artists.isEmpty()) {
             return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(artists, HttpStatus.OK);

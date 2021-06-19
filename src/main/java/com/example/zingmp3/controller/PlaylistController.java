@@ -4,6 +4,7 @@ import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
 import com.example.zingmp3.model.User;
 import com.example.zingmp3.service.playlist.IPlaylistService;
+import com.example.zingmp3.service.song.ISongService;
 import com.example.zingmp3.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,9 @@ public class PlaylistController {
 
     @Autowired
     IPlaylistService playlistService;
+
+    @Autowired
+    ISongService songService;
 
     @GetMapping("/list")
     public ResponseEntity<?> getAllPlayList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
@@ -109,6 +113,20 @@ public class PlaylistController {
         Optional<Playlist> playList = playlistService.findById(id);
         if (playList.isPresent()) {
             playList.get().setStatus(false);
+            playlistService.save(playList.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{idPlaylist}/songs/{idSong}")
+    public ResponseEntity<?> removeFromPlaylist(@PathVariable("idPlaylist") Long idPlaylist, @PathVariable("idSong") Long idSong) {
+        Optional<Playlist> playList = playlistService.findById(idPlaylist);
+        Optional<Song> song = songService.findById(idSong);
+        if (playList.isPresent() && song.isPresent()) {
+            List<Song> songs = playList.get().getSongs();
+            songs.remove(song.get());
+            playList.get().setSongs(songs);
             playlistService.save(playList.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
