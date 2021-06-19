@@ -28,7 +28,7 @@ public class Artist {
 
     private Date dob;
 
-    private Long likes;
+    private Long likes = 0L;
 
     private String avatar;
 

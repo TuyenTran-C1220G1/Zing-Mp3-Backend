@@ -39,7 +39,7 @@ public class CommentPlaylistController {
     }
 
     @PostMapping("{id}")
-    public ResponseEntity<CommentPlayList> createArtist(@PathVariable Long id, @RequestBody CommentPlayList commentPlayList) {
+    public ResponseEntity<CommentPlayList> createCommentPlaylist(@PathVariable Long id, @RequestBody CommentPlayList commentPlayList) {
         User currentUser = userService.getCurrentUser();
         Optional<Playlist> playlist = playlistService.findById(id);
         commentPlayList.setUser(currentUser);

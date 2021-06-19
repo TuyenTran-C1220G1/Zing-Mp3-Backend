@@ -48,8 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/register","/greetings","/playlists/news",
                         "/songs/top","/songs","/artists/top","/songs/new","/playlists/topview","/songs/detail/**",
-                        "/playlists/list","/playlists/ratings").permitAll()
-                .antMatchers("/playlists/**","/artists/**","/genre/**").hasRole("USER")
+                        "/playlists/list","/playlists/ratings","/artists/**").permitAll()
+                .antMatchers("/playlists/**","/genre/**","/likes/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

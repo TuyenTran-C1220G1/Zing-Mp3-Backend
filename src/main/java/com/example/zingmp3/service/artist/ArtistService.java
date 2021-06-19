@@ -37,4 +37,9 @@ public class ArtistService implements IArtistService {
     public List<Artist> sortArtistByLike() {
         return artistRepository.findAllOrderByLikesDesc();
     }
+
+    @Override
+    public List<Artist> findAllByNameArtist(String nameArtist) {
+        return artistRepository.findAllByNameArtistContains(nameArtist);
+    }
 }

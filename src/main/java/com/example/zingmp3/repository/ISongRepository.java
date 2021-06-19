@@ -13,7 +13,10 @@ import java.util.List;
 
 @Repository
 public interface ISongRepository extends JpaRepository<Song, Long> {
-    Page<Song> findAllSongByStatusOrderByIdDesc(Boolean status,Pageable pageable);
+    Page<Song> findAllSongByStatusOrderByIdDesc(boolean status,Pageable pageable);
+
+    // Find Song by name
+    List<Song> findAllByStatusAndNameSongContains(boolean status, String nameSong);
 
     @Query(value = "select * from song order by likes desc limit 6", nativeQuery = true)
     List<Song> findSongByStatusOrderByLikesDesc(boolean status);

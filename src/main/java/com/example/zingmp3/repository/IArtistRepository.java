@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface IArtistRepository extends JpaRepository<Artist,Long> {
+
     @Query(value = "select * from artist order by likes desc limit 6", nativeQuery = true)
     List<Artist> findAllOrderByLikesDesc();
+
+    List<Artist> findAllByNameArtistContains(String nameArtist);
 }
