@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -76,7 +76,7 @@ public class SongController {
         String mes = "error";
         return new ResponseEntity<>(mes, HttpStatus.NOT_FOUND);
     }
-// sua lai method put
+
     @GetMapping("/{id}")
     public ResponseEntity<?> deleteSong(@PathVariable Long id) {
         Optional<Song> songOptional = songService.findById(id);
@@ -106,5 +106,14 @@ public class SongController {
             songService.save(song);
             return new ResponseEntity<>(song, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> getSongByName(@PathVariable("name") String nameSong) {
+        List<Song> songs = songService.findAllByStatusAndNameSongContains(true, nameSong);
+        if (songs.isEmpty()) {
+            return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 }

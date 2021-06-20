@@ -21,4 +21,6 @@ public interface ISongService {
     List<Song> sortByDate(boolean status);
 
     List<Song> songOfUser();
+
+    List<Song> findAllByStatusAndNameSongContains(boolean status, String nameSong);
 }
