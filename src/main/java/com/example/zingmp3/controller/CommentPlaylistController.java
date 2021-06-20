@@ -29,7 +29,7 @@ public class CommentPlaylistController {
     @Autowired
     IPlaylistService playlistService;
 
-    @GetMapping("{id}")
+    @GetMapping("show/{id}")
     public ResponseEntity<?> findAllByPlaylistId(@PathVariable Long id) {
         List<CommentPlayList> commentPlaylists = commentPlaylistService.findAllByPlaylistId(id);
         if (commentPlaylists.isEmpty()) {

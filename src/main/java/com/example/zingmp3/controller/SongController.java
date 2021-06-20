@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,7 +113,7 @@ public class SongController {
     public ResponseEntity<?> getSongByName(@PathVariable("name") String nameSong) {
         List<Song> songs = songService.findAllByStatusAndNameSongContains(true, nameSong);
         if (songs.isEmpty()) {
-            return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ArrayList<Song>(), HttpStatus.OK);
         }
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }

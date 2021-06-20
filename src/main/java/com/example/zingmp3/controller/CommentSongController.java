@@ -26,7 +26,7 @@ public class CommentSongController {
     @Autowired
     ISongService songService;
 
-    @GetMapping("{id}")
+    @GetMapping("show/{id}")
     public ResponseEntity<?> findAllBySongId(@PathVariable Long id) {
         List<CommentSong> commentSongs = commentSongService.findAllByPlaylistId(id);
         if (commentSongs.isEmpty()) {

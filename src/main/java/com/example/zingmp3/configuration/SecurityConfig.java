@@ -46,10 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
-                .antMatchers("/", "/login", "/register","/greetings","/playlists/news",
+                .antMatchers("/", "/login", "/register","/greetings","/playlists/news","playlists/detail/**",
                         "/songs/top","/songs","/artists/top","/songs/new","/playlists/topview","/songs/detail/**",
-                        "/playlists/list","/playlists/ratings","/artists/**").permitAll()
-                .antMatchers("/playlists/**","/genre/**","/likes/**").hasRole("USER")
+                        "/playlists/list","/playlists/ratings","/artists/**","/comments/playlists/show/**","comments/artists/show/**","comments/songs/show/**"
+                ).permitAll()
+                .antMatchers("/playlists/**","/genre/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

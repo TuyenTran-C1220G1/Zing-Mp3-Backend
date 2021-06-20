@@ -26,6 +26,18 @@ public class LikeArtistController {
     @Autowired
     IArtistService artistService;
 
+    @GetMapping("{id}")
+    public ResponseEntity<?> GetLikeArtist(@PathVariable Long id) {
+        User currentUser = userService.getCurrentUser();
+        Optional<Artist> artist = artistService.findById(id);
+        Optional<LikeArtist> likeArtist = likeArtistService.findByUserAndArtistId(currentUser, artist.get().getId());
+        if(likeArtist.isPresent()){
+            return new ResponseEntity<>(likeArtist.get().isLike(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>("False", HttpStatus.NOT_FOUND);
+    }
+
+
     @PostMapping("{id}")
     public ResponseEntity<LikeArtist> createLikeArtist(@PathVariable Long id) {
         User currentUser = userService.getCurrentUser();
