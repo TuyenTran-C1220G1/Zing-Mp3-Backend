@@ -34,7 +34,7 @@ public class LikeSongController {
             Optional<LikeSong> likeSong = likeSongService.findByUserAndSongId(currentUser, song.get().getId());
             //nếu có đối tượng like rồi kiểm tra trạng thái: nếu like rồi thì (isLike =true) thì chuyển từ true sang false và giảm like đi 1
             // nếu chưa like thì (isLike=false) và tăng số lượng like thêm 1
-            if (likeSong.isPresent()) {
+            if (likeSong.isPresent() && likeSong.get().getUser().equals(currentUser)) {
                 if (likeSong.get().isLike()) {
                     likeSong.get().setLike(false);
                     if (song.get().getLikes() > 0) {

@@ -24,7 +24,6 @@ public class Artist {
 
     private String gender;
     @Lob
-
     private String description;
 
     private Date dob;

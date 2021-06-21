@@ -1,5 +1,6 @@
 package com.example.zingmp3.service.song;
 
+import com.example.zingmp3.model.Artist;
 import com.example.zingmp3.model.Song;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,8 @@ public interface ISongService {
     List<Song> sortByDate(boolean status);
 
     List<Song> songOfUser();
+
+    List<Song> findAllByStatusAndNameSongContains(boolean status, String nameSong);
+
+    Page<Song> findAllSongByStatusAndArtist(boolean status, Pageable pageable, Artist artist);
 }

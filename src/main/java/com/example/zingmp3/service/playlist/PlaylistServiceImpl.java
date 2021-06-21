@@ -80,4 +80,9 @@ public class PlaylistServiceImpl implements IPlaylistService{
         return playlistRepository.findPlaylistByUserAndStatusOrderByIdDesc(user,status);
     }
 
+    @Override
+    public List<Playlist> findAllByStatusAndNamePlaylistContains(boolean status, String name) {
+        return playlistRepository.findAllByStatusAndNamePlaylistContains(status, name);
+    }
+
 }

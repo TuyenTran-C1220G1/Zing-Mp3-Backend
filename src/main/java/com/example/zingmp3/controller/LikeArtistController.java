@@ -26,6 +26,18 @@ public class LikeArtistController {
     @Autowired
     IArtistService artistService;
 
+    @GetMapping("{id}")
+    public ResponseEntity<?> GetLikeArtist(@PathVariable Long id) {
+        User currentUser = userService.getCurrentUser();
+        Optional<Artist> artist = artistService.findById(id);
+        Optional<LikeArtist> likeArtist = likeArtistService.findByUserAndArtistId(currentUser, artist.get().getId());
+        if(likeArtist.isPresent()){
+            return new ResponseEntity<>(likeArtist.get().isLike(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>("False", HttpStatus.NOT_FOUND);
+    }
+
+
     @PostMapping("{id}")
     public ResponseEntity<LikeArtist> createLikeArtist(@PathVariable Long id) {
         User currentUser = userService.getCurrentUser();
@@ -33,7 +45,7 @@ public class LikeArtistController {
         Optional<LikeArtist> likeArtist = likeArtistService.findByUserAndArtistId(currentUser, artist.get().getId());
         //nếu có đối tượng like rồi kiểm tra trạng thái: nếu like rồi thì (isLike =true) thì chuyển từ true sang false và giảm like đi 1
         // nếu chưa like thì (isLike=false) và tăng số lượng like thêm 1
-        if (likeArtist.isPresent()) {
+        if (likeArtist.isPresent() && likeArtist.get().getUser().equals(currentUser)) {
             if (likeArtist.get().isLike()) {
                 likeArtist.get().setLike(false);
                 if (artist.get().getLikes() > 0) {

@@ -7,16 +7,12 @@ import com.example.zingmp3.service.playlist.IPlaylistService;
 import com.example.zingmp3.service.song.ISongService;
 import com.example.zingmp3.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -88,6 +84,9 @@ public class PlaylistController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> detail(@PathVariable Long id) {
         Optional<Playlist> playList = playlistService.findById(id);
+        if (!playList.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(playList, HttpStatus.OK);
     }
 
@@ -105,6 +104,9 @@ public class PlaylistController {
     public ResponseEntity<List<Playlist>> findAllByUser() {
         User currentUser = userService.getCurrentUser();
         List<Playlist> playlists = playlistService.findPlaylistByUserAndStatusOrderByIdDesc(currentUser, true);
+        if (playlists.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
@@ -124,15 +126,23 @@ public class PlaylistController {
         User currentUser = userService.getCurrentUser();
         Optional<Playlist> playList = playlistService.findById(idPlaylist);
         Optional<Song> song = songService.findById(idSong);
-
-        if (playList.isPresent() && song.isPresent() && playList.get().getUser().equals(currentUser)) {
+        if (playList.isPresent() && song.isPresent() && playList.get().getUser().equals(currentUser) ) {
             List<Song> songs = playList.get().getSongs();
             songs.remove(song.get());
             playList.get().setSongs(songs);
             playlistService.save(playList.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>("NO",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> getPlayListByName(@PathVariable("name") String namePlaylist) {
+        List<Playlist> playlists = playlistService.findAllByStatusAndNamePlaylistContains(true, namePlaylist);
+        if (playlists.isEmpty()) {
+            return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
 }

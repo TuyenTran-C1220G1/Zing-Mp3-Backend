@@ -1,10 +1,9 @@
 package com.example.zingmp3.controller;
 
+import com.example.zingmp3.dto.PlaylistDto;
 import com.example.zingmp3.model.*;
 import com.example.zingmp3.service.likePlaylist.ILikePlaylistService;
-import com.example.zingmp3.service.likeSong.ILikeSongService;
 import com.example.zingmp3.service.playlist.IPlaylistService;
-import com.example.zingmp3.service.song.ISongService;
 import com.example.zingmp3.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +35,7 @@ public class LikePlaylistController {
             Optional<LikePlayList> likePlaylist = likePlaylistService.findByUserAndPlaylistId(currentUser, playlist.get().getId());
             //nếu có đối tượng like rồi kiểm tra trạng thái: nếu like rồi thì (isLike =true) thì chuyển từ true sang false và giảm like đi 1
             // nếu chưa like thì (isLike=false) và tăng số lượng like thêm 1
-            if (likePlaylist.isPresent()) {
+            if (likePlaylist.isPresent() && likePlaylist.get().getUser().equals(currentUser)) {
                 if (likePlaylist.get().isLike()) {
                     likePlaylist.get().setLike(false);
                     if (playlist.get().getLikes() > 0) {
@@ -47,7 +46,9 @@ public class LikePlaylistController {
                     playlist.get().setLikes(playlist.get().getLikes() + 1);
                 }
                 playlistService.save(playlist.get());
-                return new ResponseEntity<>(likePlaylistService.save(likePlaylist.get()), HttpStatus.OK);
+                likePlaylistService.save(likePlaylist.get());
+                PlaylistDto playlistDto = new PlaylistDto(playlist.get().getLikes());
+                return new ResponseEntity<>(playlistDto, HttpStatus.OK);
             }
             // nếu không có đối tượng like thì tạo mới. Bấm lần đầu là like và tăng lượng likes lên 1
             LikePlayList newLikePlaylist = new LikePlayList();
@@ -56,7 +57,9 @@ public class LikePlaylistController {
             newLikePlaylist.setLike(true);
             playlist.get().setLikes(playlist.get().getLikes() + 1);
             playlistService.save(playlist.get());
-            return new ResponseEntity<>(likePlaylistService.save(newLikePlaylist), HttpStatus.OK);
+            likePlaylistService.save(newLikePlaylist);
+            PlaylistDto playlistDto = new PlaylistDto(playlist.get().getLikes());
+            return new ResponseEntity<>(playlistDto, HttpStatus.OK);
 
         } else return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
     }

@@ -2,7 +2,6 @@ package com.example.zingmp3.service.playlist;
 
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.User;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,5 +25,7 @@ public interface IPlaylistService {
     List<Playlist> findAllByViewsOrderByViews();
 
     List<Playlist>findPlaylistByUserAndStatusOrderByIdDesc(User user, boolean status);
+
+    List<Playlist> findAllByStatusAndNamePlaylistContains(boolean status, String name);
 
 }

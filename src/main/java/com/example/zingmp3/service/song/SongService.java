@@ -1,5 +1,6 @@
 package com.example.zingmp3.service.song;
 
+import com.example.zingmp3.model.Artist;
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
 import com.example.zingmp3.model.User;
@@ -17,7 +18,7 @@ import java.util.*;
 @Service
 public class SongService implements ISongService {
     @Autowired
-    ISongRepository iSongRepository;
+    ISongRepository songRepository;
 
     @Autowired
     UserService userService;
@@ -27,32 +28,32 @@ public class SongService implements ISongService {
 
     @Override
     public Page<Song> findAllByStatus(boolean status, Pageable pageable) {
-        return iSongRepository.findAllSongByStatusOrderByIdDesc(status, pageable);
+        return songRepository.findAllSongByStatusOrderByIdDesc(status, pageable);
     }
 
     @Override
     public Song save(Song song) {
-        return iSongRepository.save(song);
+        return songRepository.save(song);
     }
 
     @Override
     public void remove(Long id) {
-        iSongRepository.deleteById(id);
+        songRepository.deleteById(id);
     }
 
     @Override
     public Optional<Song> findById(Long id) {
-        return iSongRepository.findById(id);
+        return songRepository.findById(id);
     }
 
     @Override
     public List<Song> sortByLike(boolean status) {
-        return iSongRepository.findSongByStatusOrderByLikesDesc(status);
+        return songRepository.findSongByStatusOrderByLikesDesc(status);
     }
 
     @Override
     public List<Song> sortByDate(boolean status) {
-        return iSongRepository.findSongByStatusOrderByCreateAtDesc(status);
+        return songRepository.findSongByStatusOrderByCreateAtDesc(status);
     }
 
     @Override
@@ -75,5 +76,15 @@ public class SongService implements ISongService {
             return songs;
         }
         return null;
+    }
+
+    @Override
+    public List<Song> findAllByStatusAndNameSongContains(boolean status, String nameSong) {
+        return songRepository.findAllByStatusAndNameSongContains(status,nameSong);
+    }
+
+    @Override
+    public Page<Song> findAllSongByStatusAndArtist(boolean status, Pageable pageable, Artist artist) {
+        return songRepository.findAllSongByStatusAndArtist(status,pageable,artist);
     }
 }
