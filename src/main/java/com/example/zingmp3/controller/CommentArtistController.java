@@ -25,7 +25,6 @@ public class CommentArtistController {
 
     @Autowired
     IArtistService artistService;
-
     @GetMapping("show/{id}")
     public ResponseEntity<?> findAllByArtistId(@PathVariable Long id) {
         List<CommentArtist> commentArtists = commentArtistService.findAllByArtistId(id);
