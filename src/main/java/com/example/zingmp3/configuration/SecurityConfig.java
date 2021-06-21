@@ -46,11 +46,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
-                .antMatchers("/", "/login", "/register","/greetings","/playlists/news","playlists/detail/**",
-                        "/songs/top","/songs","/artists/top","/songs/new","/playlists/topview","/songs/detail/**",
-                        "/playlists/list","/playlists/ratings","/artists/**","/comments/playlists/show/**","comments/artists/show/**","comments/songs/show/**"
+                .antMatchers("/", "/login", "/register", "/playlists/news", "/playlists/detail/{id}",
+                        "/songs/top", "/songs", "/songs/new", "/songs/detail/{id}",
+                        "/artists/top","/artists/{id}","/artists",
+                        "/playlists/list", "/playlists/ratings",
+                        "/comments/playlists/show/{id}", "/comments/artists/show/{id}",
+                        "/comments/songs/show/{id}", "/comments/artists/show/{id}",
+                        "/songs/search/{name}"
                 ).permitAll()
-                .antMatchers("/playlists/**","/genre/**").hasRole("USER")
+                .antMatchers("/playlists/**", "/songs/**", "/artists/**", "/comments/**", "/likes/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
