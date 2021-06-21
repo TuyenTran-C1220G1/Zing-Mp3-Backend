@@ -1,7 +1,9 @@
 package com.example.zingmp3.controller;
+import com.example.zingmp3.model.Artist;
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
 import com.example.zingmp3.model.User;
+import com.example.zingmp3.service.artist.IArtistService;
 import com.example.zingmp3.service.playlist.IPlaylistService;
 import com.example.zingmp3.service.song.ISongService;
 import com.example.zingmp3.service.user.UserService;
@@ -29,6 +31,9 @@ public class SongController {
 
     @Autowired
     IPlaylistService playlistService;
+
+    @Autowired
+    IArtistService artistService;
 
 
     @GetMapping
@@ -117,4 +122,16 @@ public class SongController {
         }
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }
+
+    @GetMapping("/artists/{idArtist}")
+    public ResponseEntity<?> getSongByArtist(@PathVariable("idArtist") Long id, Pageable pageable) {
+        Optional<Artist> artist = artistService.findById(id);
+
+        Page<Song> songs = songService.findAllSongByStatusAndArtist(true, pageable, artist.get());
+        if (songs.isEmpty()) {
+            return new ResponseEntity<>(new ArrayList<Song>(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
+
 }
