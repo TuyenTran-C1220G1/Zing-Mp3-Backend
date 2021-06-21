@@ -87,6 +87,8 @@ public class PlaylistController {
         if (!playList.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        playList.get().setViews(playList.get().getViews() + 1);
+        playlistService.save(playList.get());
         return new ResponseEntity<>(playList, HttpStatus.OK);
     }
 
@@ -126,7 +128,7 @@ public class PlaylistController {
         User currentUser = userService.getCurrentUser();
         Optional<Playlist> playList = playlistService.findById(idPlaylist);
         Optional<Song> song = songService.findById(idSong);
-        if (playList.isPresent() && song.isPresent() && playList.get().getUser().equals(currentUser) ) {
+        if (playList.isPresent() && song.isPresent() && playList.get().getUser().equals(currentUser)) {
             List<Song> songs = playList.get().getSongs();
             songs.remove(song.get());
             playList.get().setSongs(songs);

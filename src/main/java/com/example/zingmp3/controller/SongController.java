@@ -39,6 +39,9 @@ public class SongController {
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<Optional<Song>> getDetailSong(@PathVariable Long id) {
+        Optional<Song> song= songService.findById(id);
+        song.get().setViews(song.get().getViews()+1);
+        songService.save(song.get());
         return new ResponseEntity<>(songService.findById(id), HttpStatus.OK);
     }
 
