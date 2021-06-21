@@ -119,18 +119,20 @@ public class PlaylistController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{idPlaylist}/songs/{idSong}")
+    @GetMapping("/{idPlaylist}/songs/{idSong}")
     public ResponseEntity<?> removeFromPlaylist(@PathVariable("idPlaylist") Long idPlaylist, @PathVariable("idSong") Long idSong) {
+        User currentUser = userService.getCurrentUser();
         Optional<Playlist> playList = playlistService.findById(idPlaylist);
         Optional<Song> song = songService.findById(idSong);
-        if (playList.isPresent() && song.isPresent()) {
+
+        if (playList.isPresent() && song.isPresent() && playList.get().getUser().equals(currentUser)) {
             List<Song> songs = playList.get().getSongs();
             songs.remove(song.get());
             playList.get().setSongs(songs);
             playlistService.save(playList.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("NO",HttpStatus.NOT_FOUND);
     }
 
 }

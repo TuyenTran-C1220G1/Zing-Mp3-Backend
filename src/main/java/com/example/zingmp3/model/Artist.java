@@ -23,6 +23,7 @@ public class Artist {
     private String nameArtist;
 
     private String gender;
+    @Lob
 
     private String description;
 

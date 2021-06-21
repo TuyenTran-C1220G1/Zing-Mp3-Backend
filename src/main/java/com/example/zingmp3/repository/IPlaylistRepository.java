@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -33,6 +34,5 @@ public interface IPlaylistRepository extends JpaRepository<Playlist,Long> {
     Page<Playlist> findAllByStatusOrderByIdDesc(boolean status, Pageable pageable);
 
     List<Playlist> findPlaylistByUserAndStatusOrderByIdDesc(User user, boolean status);
-
 
 }
