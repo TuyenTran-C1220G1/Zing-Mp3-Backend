@@ -1,5 +1,6 @@
 package com.example.zingmp3.service.song;
 
+import com.example.zingmp3.model.Artist;
 import com.example.zingmp3.model.Playlist;
 import com.example.zingmp3.model.Song;
 import com.example.zingmp3.model.User;
@@ -80,5 +81,10 @@ public class SongService implements ISongService {
     @Override
     public List<Song> findAllByStatusAndNameSongContains(boolean status, String nameSong) {
         return songRepository.findAllByStatusAndNameSongContains(status,nameSong);
+    }
+
+    @Override
+    public Page<Song> findAllSongByStatusAndArtist(boolean status, Pageable pageable, Artist artist) {
+        return songRepository.findAllSongByStatusAndArtist(status,pageable,artist);
     }
 }
