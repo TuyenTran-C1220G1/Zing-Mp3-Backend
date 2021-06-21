@@ -34,7 +34,7 @@ public class LikeArtistController {
         if(likeArtist.isPresent()){
             return new ResponseEntity<>(likeArtist.get().isLike(),HttpStatus.OK);
         }
-        return new ResponseEntity<>("False", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
 
 
