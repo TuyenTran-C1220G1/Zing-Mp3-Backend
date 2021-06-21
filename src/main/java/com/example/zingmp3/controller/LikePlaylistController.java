@@ -26,6 +26,18 @@ public class LikePlaylistController {
     @Autowired
     IPlaylistService playlistService;
 
+    @GetMapping("{id}")
+    public ResponseEntity<?> GetLikeArtist(@PathVariable Long id) {
+        User currentUser = userService.getCurrentUser();
+        Optional<Playlist> playlist = playlistService.findById(id);
+        Optional<LikePlayList> likePlayList = likePlaylistService.findByUserAndPlaylistId(currentUser, playlist.get().getId());
+        if(likePlayList.isPresent()){
+            return new ResponseEntity<>(likePlayList.get().isLike(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+    }
+
+
     @PostMapping("{id}")
     public ResponseEntity<?> createLikePlaylist(@PathVariable Long id) {
         User currentUser = userService.getCurrentUser();
