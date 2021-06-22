@@ -37,9 +37,9 @@ public class SongController {
 
 
     @GetMapping
-    public ResponseEntity<Page<Song>> getAllSong(Pageable pageable) {
+    public ResponseEntity<List<Song>> getAllSong(Pageable pageable) {
         boolean status = true;
-        return new ResponseEntity<>(songService.findAllByStatus(status, pageable), HttpStatus.OK);
+        return new ResponseEntity<>(songService.findAllByStatus(status), HttpStatus.OK);
     }
 
     @GetMapping("/detail/{id}")
@@ -127,12 +127,12 @@ public class SongController {
     }
 
     @GetMapping("/artists/{idArtist}")
-    public ResponseEntity<?> getSongByArtist(@PathVariable("idArtist") Long id, Pageable pageable) {
+    public ResponseEntity<?> getSongByArtist(@PathVariable("idArtist") Long id) {
         Optional<Artist> artist = artistService.findById(id);
 
-        Page<Song> songs = songService.findAllSongByStatusAndArtist(true, pageable, artist.get());
+        List<Song> songs = songService.findAllSongByStatusAndArtist(true, artist.get());
         if (songs.isEmpty()) {
-            return new ResponseEntity<>(new ArrayList<Song>(), HttpStatus.OK);
+            return new ResponseEntity<>(songs, HttpStatus.OK);
         }
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }

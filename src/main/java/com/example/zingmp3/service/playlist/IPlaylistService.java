@@ -8,7 +8,7 @@ import java.util.Optional;
 
 
 public interface IPlaylistService {
-    List<Playlist> findAllByStatus(boolean status, int page, int size);
+    List<Playlist> findAllByStatus(boolean status);
 
     Optional<Playlist> findById(Long id);
 
