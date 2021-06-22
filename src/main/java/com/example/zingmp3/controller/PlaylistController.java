@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -142,7 +143,7 @@ public class PlaylistController {
     public ResponseEntity<?> getPlayListByName(@PathVariable("name") String namePlaylist) {
         List<Playlist> playlists = playlistService.findAllByStatusAndNamePlaylistContains(true, namePlaylist);
         if (playlists.isEmpty()) {
-            return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ArrayList<Playlist>(), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }

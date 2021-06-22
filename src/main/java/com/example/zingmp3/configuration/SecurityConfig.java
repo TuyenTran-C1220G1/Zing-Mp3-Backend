@@ -46,29 +46,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
-<<<<<<< HEAD
-                .antMatchers("/", "/login", "/register",
-                        "/songs/top","/songs","/songs/new","/songs/detail/**","songs/search/**",
-                        "/artists/top",
-                        "/playlists/topview","/playlists/list","/playlists/ratings",
-                        "/comments/playlists/show/**",
-                        "/comments/artists/show/**",
-                        "/comments/songs/show/**",
-                        "/artists/**",
-                        "/songs/**",
-                        "/playlists/**",
-                        "/comments/**",
-                        "/likes/**"
-=======
+
                 .antMatchers("/", "/login", "/register", "/playlists/news", "/playlists/detail/{id}",
                         "/songs/top", "/songs", "/songs/new", "/songs/detail/{id}",
+                        "/songs/search/{name}",
                         "/artists/top","/artists/{id}","/artists",
+                        "/artists/search/{name}",
                         "/genre",
                         "/playlists/list", "/playlists/ratings","/playlists/topview",
+                        "/playlists/search/{name}",
                         "/comments/playlists/show/{id}", "/comments/artists/show/{id}",
-                        "/comments/songs/show/{id}", "/comments/artists/show/{id}",
-                        "/songs/search/{name}"
->>>>>>> 175f6c17a973260fdba3b253cc72a1afdc3f2412
+                        "/comments/songs/show/{id}", "/comments/artists/show/{id}"
                 ).permitAll()
                 .antMatchers("/playlists/**", "/songs/**", "/artists/**", "/comments/**", "/likes/**").hasRole("USER")
                 .anyRequest().authenticated()

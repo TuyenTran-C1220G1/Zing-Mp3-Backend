@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +58,7 @@ public class ArtistController {
     public ResponseEntity<?> findByName(@PathVariable("name") String name){
         List<Artist> artists = artistService.findAllByNameArtist(name);
         if (artists.isEmpty()) {
-            return new ResponseEntity<>("NO CONTENT", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ArrayList<Artist>(), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(artists, HttpStatus.OK);
     }
