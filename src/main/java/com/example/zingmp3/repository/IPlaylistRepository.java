@@ -31,7 +31,7 @@ public interface IPlaylistRepository extends JpaRepository<Playlist,Long> {
 
     List<Playlist> findAllByUserOrderByIdDesc(User user);
 
-    Page<Playlist> findAllByStatusOrderByIdDesc(boolean status, Pageable pageable);
+    List<Playlist> findAllByStatusOrderByIdDesc(boolean status);
 
     List<Playlist> findPlaylistByUserAndStatusOrderByIdDesc(User user, boolean status);
 

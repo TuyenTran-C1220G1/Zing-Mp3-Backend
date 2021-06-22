@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ISongService {
-    Page<Song> findAllByStatus(boolean status, Pageable pageable);
+    List<Song> findAllByStatus(boolean status);
 
     Song save(Song song);
 
@@ -25,5 +25,5 @@ public interface ISongService {
 
     List<Song> findAllByStatusAndNameSongContains(boolean status, String nameSong);
 
-    Page<Song> findAllSongByStatusAndArtist(boolean status, Pageable pageable, Artist artist);
+    List<Song> findAllSongByStatusAndArtist(boolean status, Artist artist);
 }

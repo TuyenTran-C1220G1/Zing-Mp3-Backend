@@ -27,10 +27,9 @@ public class PlaylistServiceImpl implements IPlaylistService{
     @Autowired
     private IUserService userService;
     @Override
-    public List<Playlist> findAllByStatus(boolean status,int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        Page<Playlist> playlists = playlistRepository.findAllByStatusOrderByIdDesc(status,pageRequest);
-        return playlists.getContent();
+    public List<Playlist> findAllByStatus(boolean status) {
+        List<Playlist> playlists = playlistRepository.findAllByStatusOrderByIdDesc(true);
+        return playlists;
     }
 
     @Override

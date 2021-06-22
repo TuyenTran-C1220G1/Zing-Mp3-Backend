@@ -33,8 +33,8 @@ public class PlaylistController {
     ISongService songService;
 
     @GetMapping("/list")
-    public ResponseEntity<?> getAllPlayList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
-        List<Playlist> playlists = playlistService.findAllByStatus(true, page, size);
+    public ResponseEntity<?> getAllPlayList() {
+        List<Playlist> playlists = playlistService.findAllByStatus(true);
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
