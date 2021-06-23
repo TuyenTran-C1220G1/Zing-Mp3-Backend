@@ -104,7 +104,7 @@ public class SongController {
             song.setImageUrl(songOptional.get().getImageUrl());
         }
         if(song.getSongUrl().isEmpty()){
-            song.setSongUrl(songOptional.get().getImageUrl());
+            song.setSongUrl(songOptional.get().getSongUrl());
         }
         java.util.Date editAt=new java.util.Date();
         song.setEditAt(editAt);

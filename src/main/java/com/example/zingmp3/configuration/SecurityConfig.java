@@ -50,10 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/login", "/register", "/playlists/news", "/playlists/detail/{id}",
                         "/songs/top", "/songs", "/songs/new", "/songs/detail/{id}",
                         "/songs/search/{name}",
-                        "/artists/top","/artists/{id}","/artists",
+                        "/songs/artists/{idArtist}",
+                        "/artists/top", "/artists/{id}", "/artists",
                         "/artists/search/{name}",
                         "/genre",
-                        "/playlists/list", "/playlists/ratings","/playlists/topview",
+                        "/playlists/list", "/playlists/ratings", "/playlists/topview",
                         "/playlists/search/{name}",
                         "/comments/playlists/show/{id}", "/comments/artists/show/{id}",
                         "/comments/songs/show/{id}", "/comments/artists/show/{id}"
